@@ -12,7 +12,8 @@ final int GAMEPLAY = 1;
 final int END = 2;
 
 void setup(){
-
+  size(600,600);
+  loadImages();
 }
 
 //Main
@@ -36,5 +37,5 @@ void draw(){
 
 
 //For loading images used for UI and Interface
-void loadImage(){
+void loadImages(){
 }
