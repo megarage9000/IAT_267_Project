@@ -1,6 +1,6 @@
-class accelerometerGame {
+class AccelerometerGame {
   
-  accelerometerGame(){
+  AccelerometerGame(){
     //
   }
   

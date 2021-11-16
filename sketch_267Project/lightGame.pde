@@ -1,6 +1,6 @@
-class lightGame{
+class LightGame{
   
-  lightGame(){
+  LightGame(){
     //
   }
   

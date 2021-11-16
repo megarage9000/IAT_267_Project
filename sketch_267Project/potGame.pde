@@ -1,6 +1,6 @@
-class potGame{
+class PotGame{
   
-  potGame(){
+  PotGame(){
     //...
   }
   

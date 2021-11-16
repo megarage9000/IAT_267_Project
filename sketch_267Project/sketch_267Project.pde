@@ -10,12 +10,12 @@ final int windowWidth = 1400;
 final int windowHeight = 800;
 
 //Game classes, 
-accelerometerGame acGame = new accelerometerGame();
-lightGame liGame = new lightGame();
-potGame poGame = new potGame();
+AccelerometerGame acGame = new AccelerometerGame();
+LightGame liGame = new LightGame();
+PotGame poGame = new PotGame();
 
 //Gamestate Controls
-int state = 1  ;
+int state = 0  ;
 final int MENU = 0;
 final int GAMEPLAY = 1;
 final int END = 2;
@@ -25,14 +25,24 @@ final int LIGHT = 0;
 final int ACCEL = 1;
 final int POT = 2;
 
+//Buttons
+Button start;
+
 void setup(){
   size(1400,800);
+  
+  //loading Images and buttons *DOES NOTHING YET*
   loadImages();
+  loadButtons();
+  
+  start = new Button(700,800,100,100);
 }
 
 //Main
 void draw(){
-  background(50);
+  background(50); //Placeholder since we dont have image background yet
+  
+  buttons(); //important for interaction, *REFRESHES ALL BUTTONS TO CHECK IF THEYRE CLICKED*
     
   switch(state){
     case MENU:
@@ -52,12 +62,6 @@ void draw(){
 
 }
 
-
-//For testing only
-void mouseClicked(){
-  if(currGame<2) currGame++;
-  else if(currGame == 2) currGame = 0;
-}
 
 
 //--------------------------------------- Loading Var-----------------------------------------------
