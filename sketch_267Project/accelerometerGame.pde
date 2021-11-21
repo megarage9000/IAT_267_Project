@@ -1,12 +1,13 @@
 
 
 class AccelerometerGame {
-  PVector pos, vel;
+  PVector vel;
   PVector bugPos;
+  String orientation = "a";
   
   AccelerometerGame(){
-    pos = new PVector(700,400);
-    bugPos = new PVector(500,500);
+    bugPos = new PVector(0,0);
+    vel = new PVector(0,0);
   }
   
   void gameplay(){
@@ -15,47 +16,47 @@ class AccelerometerGame {
     
     //Bug
     render();
+    accelerate();
     update();
-    move();
     
     //Goal box
     fill(0,0);
     rect(windowWidth/2-28, windowHeight/2-60, 192,120);
     
     //Check if game is passed
-    //if(goalCheck()) currGame++;
+    if(goalCheck()) currGame++;
+    
+    println(bugPos.x + "X" + bugPos.y + "Y");
   }
   
   void update(){
-    accelerate();
+    bugPos.add(vel);
   }
   
   void render(){
     pushMatrix();
-    translate(pos.x, pos.y);
+    translate(bugPos.x, bugPos.y);
     image(bugImg, -bugImg.width/2, -bugImg.height/2);
     popMatrix(); 
   }
   
-  void move(){
-    pos.add(vel);
-  }
-  
   void accelerate(){
-        //Check port for input
+    //Check port for input
     accelOrientation = myPort.readStringUntil('\n');
-    print(accelOrientation);
-    if(accelOrientation == "UP") vel.add(new PVector (0, -1));
-    delay(200);
+    if(accelOrientation != null) orientation = accelOrientation;
+    orientation = trim(orientation);
+    
+    if     (orientation.equals("Down"))   {vel.x = 0; vel.y = -1.5;}
+    else if(orientation.equals("Up"))     {vel.x = 0; vel.y = 1.5;}
+    else if(orientation.equals("Left"))   {vel.x = -1.5; vel.y = 0;}
+    else if(orientation.equals("Right"))  {vel.x = 1.5; vel.y = 0;}
+    else    {vel.x = 0; vel.y = 0;};
   }
   
+  //Crude check will be replaced by better measurement later
   boolean goalCheck(){
-    int left = (int)bugPos.x - bugImg.width/2;
-    int right = (int)bugPos.x + bugImg.width/2;
-    int top = (int)bugPos.y - bugImg.height/2;
-    int bot = (int)bugPos.y + bugImg.height/2;
-    if(mouseX >= left && mouseX <= right &&
-       mouseY >= top && mouseY <= bot) return true;
+    if(bugPos.x > 672 && bugPos.x <864 &&
+       bugPos.y > 340 && bugPos.y <460) return true;
     else return false;
   }
   

@@ -20,12 +20,12 @@ LightGame liGame = new LightGame();
 PotGame poGame = new PotGame();
 
 //Gamestate Controls
-int state = 0;
+int state = 1;
 final int MENU = 0;
 final int GAMEPLAY = 1;
 final int END = 2;
 
-int currGame = 0;
+int currGame = 1;
 final int LIGHT = 0;
 final int ACCEL = 1;
 final int POT = 2;
@@ -80,8 +80,8 @@ void draw(){
 //--------------------------------------- Loading Var-----------------------------------------------
 //For loading images used for UI and Interface
 void loadImages(){
-  //accelerometerBackground = loadImage("accelerometerBackground.jpg");
-  //bugImg = loadImage("bugImg.png");
+  accelerometerBackground = loadImage("accelerometerBackground.jpg");
+  bugImg = loadImage("bugImg.png");
 }
 
 //For loading buttons 
