@@ -15,12 +15,12 @@ LightGame liGame = new LightGame();
 PotGame poGame = new PotGame();
 
 //Gamestate Controls
-int state = 0;
+int state = 1;
 final int MENU = 0;
 final int GAMEPLAY = 1;
 final int END = 2;
 
-int currGame = 2;
+int currGame = 0;
 final int LIGHT = 0;
 final int ACCEL = 1;
 final int POT = 2;
