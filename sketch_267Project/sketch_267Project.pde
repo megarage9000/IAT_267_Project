@@ -49,6 +49,7 @@ void setup(){
   myPort = new Serial(this,portName,9600);
   
   start = new Button(700,800,100,100);
+  setSensor();
 }
 
 //Main
@@ -73,6 +74,28 @@ void draw(){
     //.... redundant
   }
 
+}
+
+void setSensor(){
+  
+  switch(currGame){
+    case LIGHT:
+      myPort.write('1');
+      break;
+    case ACCEL:
+      myPort.write('2');
+      break;
+    case POT:
+      myPort.write('3');
+      break;
+    default:
+    //.....
+  }
+}
+
+void advanceGame(){
+  if(currGame<2) currGame++;        //Advance to next game
+  else if(currGame == 2) state = 2; //End menu after all games are done
 }
 
 
