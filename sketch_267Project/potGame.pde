@@ -5,6 +5,12 @@ class PotGame{
   float opacity;
   float searchArea = 70;
   IntList potPasscode;
+  boolean overlap;
+  float randX;
+  float randY;
+  float randZ;
+  float prevZ;
+  boolean rerun = false;
   
   PotGame(){
     int potVal = 0;
@@ -38,25 +44,99 @@ class PotGame{
     //list of numbers
     //Generates 5 pairs of numbers, each pair has everything random except the number
     for(int i=0; i<5; i++){
+      
+      //I AM AWARE THAT I HAVE REPEATED THE EXACT SAME BLOCK OF CODE THREE TIMES, BUT I CANNOT BE FUCKED TO CHANGE IT BECAUSE IT IS SUCH A SMALL PROJECT CODING WISE
+      
+      
       int randLetter = int(random(200));
-      addNewLetter(random(20, windowWidth - 80), random(20, windowHeight - 80), random (255), randLetter, false);
-      addNewLetter(random(20, windowWidth - 80), random(20, windowHeight - 80), random (255), randLetter, false);
+      overlap = true;
+      while(overlap){
+        randX = random(20, windowWidth - 150);
+        randY = random(50, windowHeight - 50);
+        randZ = random(-40, 300);
+        rerun = false;
+        for(int j=0; j<wordItems.size(); j++){
+          WordItem currItem = wordItems.get(j);
+          //Reruns if visually overlapping a number in the same search area
+          if(randX > currItem.position.x && randX < currItem.position.x + 50 &&
+             randY > currItem.position.y && randY < currItem.position.y + 50 &&
+             randZ > currItem.zPos - searchArea && randZ < currItem.zPos + searchArea 
+             )
+            rerun = true;
+          }
+        prevZ = randZ;
+        if(rerun == false || wordItems.size() == 0){
+          overlap = false;
+        }
+      }
+      addNewLetter(randX, randY, randZ, randLetter);
+      overlap = true;
+      while(overlap){
+        randX = random(20, windowWidth - 150);
+        randY = random(50, windowHeight - 50);
+        randZ = random(-40, 300);
+        rerun = false;
+        for(int j=0; j<wordItems.size(); j++){
+          WordItem currItem = wordItems.get(j);
+          if(randX > currItem.position.x && randX < currItem.position.x + 50 &&
+             randY > currItem.position.y && randY < currItem.position.y + 50 &&
+             randZ > currItem.zPos - searchArea && randZ < currItem.zPos + searchArea 
+             ){
+               rerun = true;
+             }
+             //Reruns if number pair is in the same search area
+             if(randZ > prevZ - searchArea && randZ < prevZ + searchArea){
+                rerun = true;
+             }
+          }
+        if(rerun == false || wordItems.size() == 0){
+          overlap = false;
+        }
+      }
+      
+      //Prevents direct overlap of area between identical numbers
+      
+      addNewLetter(randX, randY, randZ, randLetter);
     }
+    
     //Generates 5 numbers that have no pair, saves their value as an intlist
     potPasscode = new IntList();
     for(int i=0; i<5; i++){
       int randLetter = int(random(200));
       potPasscode.append(randLetter);
-      addNewLetter(random(50, windowWidth - 50), random(50, windowHeight - 50), random (255), randLetter, false);
+      overlap = true;
+      while(overlap){
+        randX = random(20, windowWidth - 150);
+        randY = random(50, windowHeight - 50);
+        randZ = random(-40, 300);
+        rerun = false;
+        for(int j=0; j<wordItems.size(); j++){
+          WordItem currItem = wordItems.get(j);
+          if(randX > currItem.position.x && randX < currItem.position.x + 50 &&
+             randY > currItem.position.y && randY < currItem.position.y + 50 &&
+             randZ > currItem.zPos - searchArea && randZ < currItem.zPos + searchArea 
+             )
+            rerun = true;
+          }
+        
+        if(rerun == false || wordItems.size() == 0){
+          overlap = false;
+        }
+      }
+      addNewLetter(random(50, windowWidth - 50), random(50, windowHeight - 50), random (255), randLetter);
     }
     println(potPasscode);
     doOnce = false;
- }
+  }
   
   void fakePot(){
    //fake potentiometer using mouseY
    float wHeight = windowHeight;
    pot = (mouseY/wHeight)*255;
+  }
+  
+  void overlap(){
+    
   }
   
 }
