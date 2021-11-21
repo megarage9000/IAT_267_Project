@@ -82,6 +82,6 @@ void loadButtons(){
 
 
 //-----------------Potentiometer Game Itmes-------------------
-void addNewLetter(float xPos, float yPos, float zPos, int letter, boolean lowercase){
-  wordItems.add(new WordItem(new PVector(xPos, yPos), zPos, letter, lowercase));
+void addNewLetter(float xPos, float yPos, float zPos, int letter){
+  wordItems.add(new WordItem(new PVector(xPos, yPos), zPos, letter));
 }
