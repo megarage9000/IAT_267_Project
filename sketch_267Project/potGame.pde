@@ -123,7 +123,7 @@ class PotGame{
           overlap = false;
         }
       }
-      addNewLetter(random(50, windowWidth - 50), random(50, windowHeight - 50), random (255), randLetter);
+      addNewLetter(randX, randY, randZ, randLetter);
     }
     println(potPasscode);
     doOnce = false;
