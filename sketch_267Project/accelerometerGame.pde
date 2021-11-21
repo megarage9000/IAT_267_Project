@@ -26,7 +26,7 @@ class AccelerometerGame {
     //Check if game is passed
     if(goalCheck()) currGame++;
     
-    println(bugPos.x + "X" + bugPos.y + "Y");
+    println(up);
   }
   
   void update(){
@@ -51,6 +51,13 @@ class AccelerometerGame {
     else if(orientation.equals("Left"))   {vel.x = -1.5; vel.y = 0;}
     else if(orientation.equals("Right"))  {vel.x = 1.5; vel.y = 0;}
     else    {vel.x = 0; vel.y = 0;};
+    
+    //Temporary
+    if(up){vel.x = 0; vel.y = -1.5;}
+    if(down){vel.x = 0; vel.y = 1.5;}
+    if(left){vel.x = -1.5; vel.y = 0;}
+    if(right){vel.x = 1.5; vel.y = 0;}
+    
   }
   
   //Crude check will be replaced by better measurement later
@@ -62,4 +69,23 @@ class AccelerometerGame {
   
   
   
+  
 }
+
+//TEMPORARY KEYBOARD MOVEMENT
+boolean up, down, left ,right;
+
+void keyPressed(){
+  if(key == 'W' || key == 'w') up = true;
+  if(key == 'S' || key == 's') down = true;
+  if(key == 'A' || key == 'a') left = true;
+  if(key == 'D' || key == 'd') right = true;
+}
+
+void keyReleased(){
+  if(key == 'W' || key == 'w') up = false;
+  if(key == 'S' || key == 's') down = false;
+  if(key == 'A' || key == 'a') left = false;
+  if(key == 'D' || key == 'd') right = false;
+}
+  
