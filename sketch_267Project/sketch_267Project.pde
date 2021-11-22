@@ -11,8 +11,8 @@ Serial myPort;
 String accelOrientation;
 
 //Window size
-final int windowWidth = 1400;
-final int windowHeight = 800;
+final float windowWidth = 1400;
+final float windowHeight = 800;
 
 //Game classes, 
 AccelerometerGame acGame = new AccelerometerGame();
@@ -36,6 +36,9 @@ Button start;
 //Images
 PImage accelerometerBackground;
 PImage bugImg;
+//Potentiometer Items
+// ArrayList<WordItem> wordItems = new ArrayList<WordItem>();
+
 
 void setup(){
   size(1400,800);
@@ -87,4 +90,11 @@ void loadImages(){
 //For loading buttons 
 void loadButtons(){
   //...
+}
+
+
+
+//-----------------Potentiometer Game Itmes-------------------
+void addNewLetter(float xPos, float yPos, float zPos, int letter){
+  wordItems.add(new WordItem(new PVector(xPos, yPos), zPos, letter));
 }
