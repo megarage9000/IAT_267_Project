@@ -37,7 +37,7 @@ Button start;
 PImage accelerometerBackground;
 PImage bugImg;
 //Potentiometer Items
-// ArrayList<WordItem> wordItems = new ArrayList<WordItem>();
+ArrayList<WordItem> wordItems = new ArrayList<WordItem>();
 
 
 void setup(){
