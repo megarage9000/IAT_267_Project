@@ -5,6 +5,11 @@
 
 */
 
+import processing.serial.*;
+
+Serial myPort;
+String accelOrientation;
+
 //Window size
 final float windowWidth = 1400;
 final float windowHeight = 800;
@@ -20,7 +25,7 @@ final int MENU = 0;
 final int GAMEPLAY = 1;
 final int END = 2;
 
-int currGame = 0;
+int currGame = 1;
 final int LIGHT = 0;
 final int ACCEL = 1;
 final int POT = 2;
@@ -28,6 +33,9 @@ final int POT = 2;
 //Buttons
 Button start;
 
+//Images
+PImage accelerometerBackground;
+PImage bugImg;
 //Potentiometer Items
 ArrayList<WordItem> wordItems = new ArrayList<WordItem>();
 
@@ -38,6 +46,10 @@ void setup(){
   //loading Images and buttons *DOES NOTHING YET*
   loadImages();
   loadButtons();
+  
+  //Port
+  String portName = Serial.list()[0]; //List all ports to find correct one
+  myPort = new Serial(this,portName,9600);
   
   start = new Button(700,800,100,100);
 }
@@ -71,7 +83,8 @@ void draw(){
 //--------------------------------------- Loading Var-----------------------------------------------
 //For loading images used for UI and Interface
 void loadImages(){
-  //...
+  accelerometerBackground = loadImage("accelerometerBackground.jpg");
+  bugImg = loadImage("bugImg.png");
 }
 
 //For loading buttons 
