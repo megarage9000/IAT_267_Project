@@ -10,6 +10,11 @@ import processing.serial.*;
 Serial myPort;
 String accelOrientation;
 
+int valP_light; // Data received from the serial port - variable to store the light sensor reading
+int valP_slider; // Data received from the serial port - variable to store the slider sensor reading
+int valP_button;
+
+
 //Window size
 final float windowWidth = 1400;
 final float windowHeight = 800;
@@ -49,13 +54,68 @@ void setup(){
   
   //Port
   String portName = Serial.list()[0]; //List all ports to find correct one
-  myPort = new Serial(this,portName,9600);
+  port = new Serial(this, Serial.list()[0], 9600);
+
   
   start = new Button(700,800,100,100);
 }
 
 //Main
 void draw(){
+
+
+  if (0 < port.available()) { // If data is available to read,
+    
+    println(" ");
+    
+    port.readBytesUntil('&', inBuffer);  //read in all data until '&' is encountered
+    
+    if (inBuffer != null) {
+      String myString = new String(inBuffer);
+      //println(myString);  //for testing only
+      
+      
+      //p is all sensor data (with a's and b's) ('&' is eliminated) ///////////////
+      
+      String[] p = splitTokens(myString, "&");  
+      if (p.length < 2) return;  //exit this function if packet is broken
+      //println(p[0]);   //for testing only
+      
+      
+      //get light sensor reading //////////////////////////////////////////////////
+      
+      String[] light_sensor = splitTokens(p[0], "a");  //get light sensor reading 
+      if (light_sensor.length != 3) return;  //exit this function if packet is broken
+      //println(light_sensor[1]);
+      valP_light = int(light_sensor[1]);
+      
+      print("light sensor:");
+      print(valP_light);
+      println(" ");  
+
+
+      //get slider sensor reading //////////////////////////////////////////////////
+      
+      String[] slider_sensor = splitTokens(p[0], "b");  //get slider sensor reading 
+      if (slider_sensor.length != 3) return;  //exit this function if packet is broken
+      //println(slider_sensor[1]);
+      valP_slider = int(slider_sensor[1]);
+
+      print("slider sensor:");
+      print(valP_slider);
+      println(" "); 
+      
+      
+      
+      
+      String[] button_sensor = splitTokens(p[0], "c");  //get light sensor reading 
+      if (button_sensor.length != 3) return;  //exit this function if packet is broken
+      valP_light = int(button_sensor[1]);
+      
+    }
+  }
+  
+  
   background(50); //Placeholder since we dont have image background yet
   
   buttons(); //important for interaction, *REFRESHES ALL BUTTONS TO CHECK IF THEYRE CLICKED*
