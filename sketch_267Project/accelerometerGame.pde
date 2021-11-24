@@ -4,6 +4,7 @@ class AccelerometerGame {
   PVector vel;
   PVector bugPos;
   String orientation = "a";
+  color bc = color(0,0);
   
   AccelerometerGame(){
     bugPos = new PVector(0,0);
@@ -13,20 +14,27 @@ class AccelerometerGame {
   void gameplay(){
     //Background
     background(accelerometerBackground);
+
+    //Goal box
+    fill(bc);
+    rect(windowWidth/2-28, windowHeight/2-60, 192,120);
     
     //Bug
     render();
     accelerate();
     update();
-    
-    //Goal box
-    fill(0,0);
-    rect(windowWidth/2-28, windowHeight/2-60, 192,120);
+
     
     //Check if game is passed
-    if(goalCheck()) currGame++;
+    if(goalCheck()){
+      bc = color(255,0,0);
+      myPort.write('1');
+    }else{
+      bc = color(0,0,0);
+      myPort.write('0');
+    }
     
-    println(up);
+    println(goalCheck());
   }
   
   void update(){
