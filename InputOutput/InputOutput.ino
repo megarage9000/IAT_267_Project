@@ -6,14 +6,20 @@ MMA8452Q accel;                   // create instance of the MMA8452 class
 // Set Analog inputs (Any analog inputs)
 int lightPin = A0;
 int potPin = A1;
+int accelPin = A2;
+int noInput = -1;
+int pinToRead = noInput;
 
 // Initialize sensor values
-int lightVal = 0;
-int potVal = 0;
+int inputVal = 0;
 
-// For packaging purposes, set up "dividers"
-char lightDivider = 'a';
-char potDivider = 'b';
+// Need to install Dictionary Library
+//Dictionary * inputKeys = new Dictionary();
+//inputKeys("forceInput", lightPin);
+//inputKeys("potInput", potPin);
+//inputKeys("accelPin", accelPin);
+//inputKeys("noRead", noInput);
+// 
 
 void setup() {
   // put your setup code here, to run once:
@@ -23,26 +29,23 @@ void setup() {
   if (accel.begin() == false) {
     Serial.println("Not Connected. Please check connections and read the hookup guide.");
     while (1);
-  }
-  
+  } 
 }
 
-void packageAndSend(int val, char divider, int waitTime=0) {
-  Serial.print(divider);
-  Serial.print(val);
-  Serial.print(divider);
-  Serial.println(); 
+void readSensor(int pin, int waitTime = 0) {
+  int returnVal = analogRead(pin);
+  Serial.println(returnVal);
   delay(waitTime);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  lightVal = analogRead(A0);
-  potVal = analogRead(A1);
-
-  packageAndSend(lightVal, lightDivider);
-  packageAndSend(potVal, potDivider);
-  delay(1000);
+  if(Serial.available() > 0) {
+    inputVal = Serial.read();
+    if(inputVal != -1) {
+      readSensor(inputVal);
+    }
+  }
 
   //Accelerometer Code
 //  if (accel.available()) {      // Wait for new data from accelerometer
