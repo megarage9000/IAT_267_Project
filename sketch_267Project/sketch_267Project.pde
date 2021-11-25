@@ -54,10 +54,12 @@ void setup(){
   
   //Port
   String portName = Serial.list()[0]; //List all ports to find correct one
-  port = new Serial(this, Serial.list()[0], 9600);
+  myPort = new Serial(this, Serial.list()[0], 9600);
 
   
   start = new Button(700,800,100,100);
+  
+  setSensor();
 }
 
 //Main

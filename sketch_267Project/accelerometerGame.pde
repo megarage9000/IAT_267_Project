@@ -34,7 +34,6 @@ class AccelerometerGame {
       myPort.write('0');
     }
     
-    println(goalCheck());
   }
   
   void update(){
@@ -51,6 +50,7 @@ class AccelerometerGame {
   void accelerate(){
     //Check port for input
     accelOrientation = myPort.readStringUntil('\n');
+    println(myPort.readStringUntil('\n'));
     if(accelOrientation != null) orientation = accelOrientation;
     orientation = trim(orientation);
     
