@@ -1,25 +1,19 @@
 #include <Wire.h>                 // Must include Wire library for I2C
 #include "SparkFun_MMA8452Q.h"    // Click here to get the library: http://librarymanager/All#SparkFun_MMA8452Q
-
+#include <Dictionary.h>
 MMA8452Q accel;                   // create instance of the MMA8452 class
 
 // Set Analog inputs (Any analog inputs)
-int lightPin = A0;
+int forcePin = A0;
 int potPin = A1;
-int accelPin = A2;
+int accelPin = -2;
 int noInput = -1;
-int pinToRead = noInput;
 
 // Initialize sensor values
+int inputPin = noInput;
 int inputVal = 0;
+int delayTime = 0;
 
-// Need to install Dictionary Library
-//Dictionary * inputKeys = new Dictionary();
-//inputKeys("forceInput", lightPin);
-//inputKeys("potInput", potPin);
-//inputKeys("accelPin", accelPin);
-//inputKeys("noRead", noInput);
-// 
 
 void setup() {
   // put your setup code here, to run once:
@@ -38,33 +32,73 @@ void readSensor(int pin, int waitTime = 0) {
   delay(waitTime);
 }
 
+void stringToAction(String message) {
+  if(message == "potentioSet") {
+    inputPin = potPin;
+    delayTime = 100;
+  }
+  else if(message == "forceSet") {
+    inputPin = forcePin;
+    delayTime = 100;
+  }
+  else if(message == "accelSet") {
+    inputPin = accelPin;
+    delayTime = 100;
+  }
+  else if(message == "reset") {
+    inputPin =  noInput;
+    delayTime = 100;
+  }
+  else if(message == "gamePass") {
+    // Need to figure out function for calling game pass
+    inputPin =  noInput;    
+  }
+  else if(message == "gameFail") {
+     // Need to figure out function for calling game fail
+    inputPin =  noInput;  
+  }
+}
+
+void sendSensorInput() {
+  if(inputPin == accelPin) {
+    accelerometerRead();
+  }
+  else {
+    int val = analogRead(inputPin);
+    Serial.println(val);
+    delay(delayTime);
+  }
+}
+
+void accelerometerRead() {
+  if (accel.available()) {      // Wait for new data from accelerometer
+    // Orientation of board (Right, Left, Down, Up);
+    if (accel.isRight() == true) {
+      Serial.println("Right");
+    }
+    else if (accel.isLeft() == true) {
+      Serial.println("Left");
+    }
+    else if (accel.isUp() == true) {
+      Serial.println("Up");
+    }
+    else if (accel.isDown() == true) {
+      Serial.println("Down");
+    }
+    else if (accel.isFlat() == true) {
+      Serial.println("Flat");
+    }
+  }
+  delay(delayTime);
+}
+
 void loop() {
   // put your main code here, to run repeatedly:
   if(Serial.available() > 0) {
-    inputVal = Serial.read();
-    if(inputVal != -1) {
-      readSensor(inputVal);
+    String keyToRead = Serial.readString();
+    if(inputPin != noInput) {
+      sendSensorInput();
     }
   }
-
   //Accelerometer Code
-//  if (accel.available()) {      // Wait for new data from accelerometer
-//    // Orientation of board (Right, Left, Down, Up);
-//    if (accel.isRight() == true) {
-//      Serial.println("Right");
-//    }
-//    else if (accel.isLeft() == true) {
-//      Serial.println("Left");
-//    }
-//    else if (accel.isUp() == true) {
-//      Serial.println("Up");
-//    }
-//    else if (accel.isDown() == true) {
-//      Serial.println("Down");
-//    }
-//    else if (accel.isFlat() == true) {
-//      Serial.println("Flat");
-//    }
-//  }
-//  delay(100);
 }
