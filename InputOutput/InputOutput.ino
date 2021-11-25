@@ -1,6 +1,5 @@
 #include <Wire.h>                 // Must include Wire library for I2C
 #include "SparkFun_MMA8452Q.h"    // Click here to get the library: http://librarymanager/All#SparkFun_MMA8452Q
-#include <Dictionary.h>
 MMA8452Q accel;                   // create instance of the MMA8452 class
 
 // Set Analog inputs (Any analog inputs)
@@ -56,6 +55,9 @@ void stringToAction(String message) {
   else if(message == "gameFail") {
      // Need to figure out function for calling game fail
     inputPin =  noInput;  
+  }
+  else{
+    inputPin = noInput;
   }
 }
 
