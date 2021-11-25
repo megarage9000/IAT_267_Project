@@ -53,7 +53,7 @@ class PotGame{
       while(overlap){
         randX = random(20, windowWidth - 150);
         randY = random(50, windowHeight - 50);
-        randZ = random(-40, 300);
+        randZ = random(80, 300);
         rerun = false;
         for(int j=0; j<wordItems.size(); j++){
           WordItem currItem = wordItems.get(j);
@@ -133,6 +133,8 @@ class PotGame{
    //fake potentiometer using mouseY
    float wHeight = windowHeight;
    pot = (mouseY/wHeight)*255;
+      pot = valP_slider;
+
   }
   
   void overlap(){

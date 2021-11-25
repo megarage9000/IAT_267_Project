@@ -1,5 +1,5 @@
 # IAT 267 Final Project
-#### *By John, Ginnie, and Pacholo* and zak
+#### *By John, Ginnie, Pacholo, and Zak* 
 
 Programs written in Processing / Arduino(Wiring) will be stored here.
 
