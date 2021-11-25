@@ -9,7 +9,7 @@ int accelPin = -2;
 int noInput = -1;
 
 // Initialize sensor values
-int inputPin = noInput;
+int inputPin = accelPin;
 int inputVal = 0;
 int delayTime = 0;
 
@@ -17,18 +17,31 @@ int delayTime = 0;
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-
   //accelerometer setup
-  if (accel.begin() == false) {
-    Serial.println("Not Connected. Please check connections and read the hookup guide.");
-    while (1);
-  } 
+  accel.init();
+//  while (accel.begin() == false) {
+//    Serial.println("Not Connected. Please check connections and read the hookup guide.");
+//    //while (1);
+//  } 
 }
 
-void readSensor(int pin, int waitTime = 0) {
+void loop() {
+//  Serial.println(inputPin);
+  // put your main code here, to run repeatedly:
+//  if(Serial.available() > 0) {
+//    String keyToRead = Serial.readString();
+//    if(inputPin != noInput) {
+//      
+//    }
+//  }
+  //Accelerometer Code
+  sendSensorInput();
+}
+
+void readSensor(int pin) {
   int returnVal = analogRead(pin);
   Serial.println(returnVal);
-  delay(waitTime);
+  delay(delayTime);
 }
 
 void stringToAction(String message) {
@@ -92,15 +105,4 @@ void accelerometerRead() {
     }
   }
   delay(delayTime);
-}
-
-void loop() {
-  // put your main code here, to run repeatedly:
-  if(Serial.available() > 0) {
-    String keyToRead = Serial.readString();
-    if(inputPin != noInput) {
-      sendSensorInput();
-    }
-  }
-  //Accelerometer Code
 }
