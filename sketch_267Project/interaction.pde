@@ -2,8 +2,14 @@
 
 //For testing only
 void mouseClicked(){
-  if(currGame<2) currGame++;
-  else if(currGame == 2) currGame = 0;
+  if(currGame<2) {
+    currGame++;
+    setSensor();
+  }
+  else if(currGame == 2){
+    currGame = 0;
+    setSensor();
+  }
 }
 
 
