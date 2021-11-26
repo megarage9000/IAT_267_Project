@@ -27,7 +27,7 @@ void loop() {
   else {
     String inputVals = packageInputVals();
     Serial.println(inputVals);
-    delay(100);
+//    delay(100);
   }
 }
 

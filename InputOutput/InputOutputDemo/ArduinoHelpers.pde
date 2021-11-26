@@ -1,7 +1,7 @@
 import processing.serial.*;
 
 Serial port;
-String divider = "|";
+char divider = '|';
 
 // Error symbols (Values are arbitrary)
 // - Used to indicate if the port is unable to fetch sensor values
@@ -21,7 +21,10 @@ byte[] inputBuffer = new byte[255];
 
 // Call this method to start the port
 void initializeSerial() {
-  port = new Serial(this, Serial.list()[0], 9600);
+  // String portName = Serial.list()[0];
+  String portName = "COM8";
+  println("Using port = " + portName);
+  port = new Serial(this, portName, 9600);
 }
 
 // Depackages the incoming bytes, returns a success/error symbol
@@ -30,11 +33,12 @@ int depackageValues() {
     port.readBytesUntil('\n', inputBuffer);
     if(inputBuffer != null) {
       String input = new String(inputBuffer);
-      inputVals = splitTokens(input, divider);
+      inputVals = split(input, divider);
+      // Catch the case where an empty buffer is passed.
+      if(inputVals.length == 1) {
+        return ERR_DEPACK;
+      }
       return SUCCESS_DEPACK;
-    }
-    else {
-      return ERR_DEPACK;
     }
   }
   return ERR_DEPACK;
@@ -61,12 +65,12 @@ float getPotentiometer() {
   if(depackageValues() == ERR_DEPACK) {
     return ERR_ANALOG;
   } 
-  return float(inputVals[0]);
+  return float(inputVals[1]);
 }
 
 float getForceSensor() {
   if(depackageValues() == ERR_DEPACK) {
     return ERR_ANALOG;
   } 
-  return float(inputVals[0]);
+  return float(inputVals[2]);
 }
