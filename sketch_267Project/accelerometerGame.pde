@@ -1,10 +1,23 @@
 
 
 class AccelerometerGame {
+  //Movement
   PVector vel;
   PVector bugPos;
+  PVector upForce =new PVector(0, -0.75);
+  PVector downForce =new PVector(0, 0.75);
+  PVector leftForce =new PVector(-0.75, 0);
+  PVector rightForce =new PVector(0.75, 0);
   String orientation = "a";
   color bc = color(0,0);
+  float damp = 0.8;
+  
+  //Timer
+  boolean start;
+  int timeLimit = 10000;
+  int currTime;
+  int passedTime;
+  int timeLeft = 60;
   
   AccelerometerGame(){
     bugPos = new PVector(0,0);
@@ -14,7 +27,15 @@ class AccelerometerGame {
   void gameplay(){
     //Background
     background(accelerometerBackground);
-
+    
+    //Timer
+    if(!start) {
+      startTimer();
+      start = true;
+    }
+    textSize(100);
+    text(timeLeft-passedTime/1000, 400,100);
+    
     //Goal box
     fill(bc);
     rect(windowWidth/2-28, windowHeight/2-60, 192,120);
@@ -23,7 +44,6 @@ class AccelerometerGame {
     render();
     accelerate();
     update();
-
     
     //Check if game is passed
     if(goalCheck()){
@@ -34,10 +54,21 @@ class AccelerometerGame {
       myPort.write('0');
     }
     
+    //Check if game failed
+    if(passedTime < timeLimit) passedTime = millis() - currTime;
+    if(passedTime > timeLimit){
+      
+       //currTime = millis();
+       //println("run");
+     }
+     
+     //println(passedTime/1000);
+    
   }
   
   void update(){
     bugPos.add(vel);
+    vel.mult(damp);
   }
   
   void render(){
@@ -47,25 +78,33 @@ class AccelerometerGame {
     popMatrix(); 
   }
   
+  //void accelerate(){
+  //  vel.a
+  //}
+  
   void accelerate(){
     //Check port for input
+    if(myPort.available()>0){
     accelOrientation = myPort.readStringUntil('\n');
-    println(myPort.readStringUntil('\n'));
-    if(accelOrientation != null) orientation = accelOrientation;
-    orientation = trim(orientation);
+    println(accelOrientation);
+    }
+    //println(myPort.readStringUntil('\n'));
+    if(accelOrientation != null) {
+      orientation = accelOrientation;
+      orientation = trim(orientation);
+    }
     
-    if     (orientation.equals("Down"))   {vel.x = 0; vel.y = -1.5;}
-    else if(orientation.equals("Up"))     {vel.x = 0; vel.y = 1.5;}
-    else if(orientation.equals("Left"))   {vel.x = -1.5; vel.y = 0;}
-    else if(orientation.equals("Right"))  {vel.x = 1.5; vel.y = 0;}
-    else    {vel.x = 0; vel.y = 0;};
+    
+    if(orientation.equals("Down")) vel.add(upForce);
+    if(orientation.equals("Up"))   vel.add(downForce);
+    if(orientation.equals("Left"))   vel.add(leftForce);
+    if(orientation.equals("Right"))  vel.add(rightForce);
     
     //Temporary
-    if(up){vel.x = 0; vel.y = -1.5;}
-    if(down){vel.x = 0; vel.y = 1.5;}
-    if(left){vel.x = -1.5; vel.y = 0;}
-    if(right){vel.x = 1.5; vel.y = 0;}
-    
+    if(up) vel.add(upForce);
+    if(down) vel.add(downForce);
+    if(left) vel.add(leftForce);
+    if(right) vel.add(rightForce);
   }
   
   //Crude check will be replaced by better measurement later
@@ -75,8 +114,21 @@ class AccelerometerGame {
     else return false;
   }
   
+  void startTimer(){
+    currTime = millis();
+  }
   
+  //Call when player passes game
+  void advanceGame(){
+    start = false;  //Reset Timer
+    currGame++;
+    
+  }
   
+  //Call when player loses game
+  void failGame(){
+    start = false;  //Reset Timer
+  }
   
 }
 
