@@ -40,6 +40,7 @@ int depackageValues() {
       }
       return SUCCESS_DEPACK;
     }
+    //port.clear();
   }
   return ERR_DEPACK;
 }
@@ -72,5 +73,11 @@ float getForceSensor() {
   if(depackageValues() == ERR_DEPACK) {
     return ERR_ANALOG;
   } 
+  
   return float(inputVals[2]);
+}
+
+void outputToPort(char a) {
+  println("Sending output");
+  port.write(a);
 }

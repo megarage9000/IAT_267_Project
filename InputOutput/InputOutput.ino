@@ -4,11 +4,15 @@
 
 MMA8452Q accel;                   // create instance of the MMA8452 class
 Servo ticker;
+char trigger;
 
 // analog pins
 int potenioPin = A0;
 int forcePin = A1;
 int servoPin = A2;
+
+// digital
+int greenLed = 8;
 
 // divider
 char divider = '|';
@@ -22,13 +26,19 @@ void setup() {
 
 void loop() { 
   if(Serial.available()) {
-    Serial.println(Serial.readString());
+    trigger = Serial.read();
+    Serial.flush();
   }
-  else {
+  if(trigger == '1'){
+    output();
+    trigger = '0';
+  }
+  if (trigger == '0'){
     String inputVals = packageInputVals();
     Serial.println(inputVals);
-//    delay(100);
   }
+
+  Serial.println(trigger);
 }
 
 String packageInputVals() {
@@ -43,6 +53,13 @@ String packageInputVals() {
   // -- Read Light / Force Sensor
   inputPackageVals += analogRead(forcePin);
   return inputPackageVals;
+}
+
+void output() {
+  digitalWrite(greenLed, HIGH);
+  delay(500);
+  digitalWrite(greenLed, LOW);
+  delay(500);
 }
 
 String accelerometerRead() {
@@ -66,6 +83,7 @@ String accelerometerRead() {
     else {
       return "None";
     }
+    //delay(100);
   }
   else {
     return "None";
