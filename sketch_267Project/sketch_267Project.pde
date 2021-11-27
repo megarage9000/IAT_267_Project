@@ -40,7 +40,8 @@ Button start;
 
 //Images
 PImage accelerometerBackground;
-PImage bugImg;
+PImage bugImg, controlPanelImg;
+PImage redButtonImg, blueButtonImg, greenButtonImg;
 //Potentiometer Items
 ArrayList<WordItem> wordItems = new ArrayList<WordItem>();
 
@@ -165,6 +166,11 @@ void setSensor(){
 void loadImages(){
   accelerometerBackground = loadImage("accelerometerBackground.jpg");
   bugImg = loadImage("bugImg.png");
+  blueButtonImg = loadImage("blueButton.png");
+  redButtonImg = loadImage("redButton.png");
+  greenButtonImg = loadImage("greenButton.png");
+  controlPanelImg = loadImage("controlPanel.png");
+  
 }
 
 //For loading buttons 

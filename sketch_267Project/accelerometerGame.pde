@@ -1,5 +1,3 @@
-
-
 class AccelerometerGame {
   //Movement
   PVector vel;
@@ -19,9 +17,17 @@ class AccelerometerGame {
   int passedTime;
   int timeLeft = 60;
   
+  //Buttons
+  Button redButton;
+  Button greenButton;
+  Button blueButton;
+
+  
   AccelerometerGame(){
+    //Bug vectors
     bugPos = new PVector(0,0);
     vel = new PVector(0,0);
+    
   }
   
   void gameplay(){
@@ -32,9 +38,17 @@ class AccelerometerGame {
     if(!start) {
       startTimer();
       start = true;
+      loadButtons();
     }
     textSize(100);
     text(timeLeft-passedTime/1000, 400,100);
+    
+    //Buttons
+    image(controlPanelImg, 0,100);
+    redButton.render();
+    greenButton.render();
+    blueButton.render();
+    
     
     //Goal box
     fill(bc);
@@ -78,16 +92,19 @@ class AccelerometerGame {
     popMatrix(); 
   }
   
-  //void accelerate(){
-  //  vel.a
-  //}
+  void loadButtons(){
+    redButton = new Button(redButtonImg, 50, 150);
+    greenButton = new Button(greenButtonImg, 50, 300);
+    blueButton = new Button(blueButtonImg, 50, 450);
+  }
   
   void accelerate(){
     //Check port for input
-    if(myPort.available()>0){
+    if(myPort.available()>100){
+      myPort.clear();
+    }
     accelOrientation = myPort.readStringUntil('\n');
     println(accelOrientation);
-    }
     //println(myPort.readStringUntil('\n'));
     if(accelOrientation != null) {
       orientation = accelOrientation;
