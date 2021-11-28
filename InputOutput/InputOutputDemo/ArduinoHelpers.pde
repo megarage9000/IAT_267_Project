@@ -88,7 +88,15 @@ float checkForNaN(float value) {
 
 
 // --- Outputting to Arduino --- 
-void outputToPort(char a) {
-  println("Sending output " + a);
-  port.write(a);
+void outputToPort(int val) {
+  println("Sending output " + str(val));
+  port.write(val);
+}
+
+void win() {
+  outputToPort(1);
+}
+
+void lose() {
+  outputToPort(0);
 }

@@ -44,27 +44,32 @@ void draw() {
   circle(width - circleRadius, height - circleRadius, circleRadius);
 }
 
-void mouseClicked() {
-  outputToPort('1');
+void keyPressed() {
+  if(key == 'a') {
+    win();
+  }
+  else if(key == 'd') {
+    lose();
+  }
 }
 
 void setCircleAColour(String direction) {
-  if(direction == "None") {
-    circleA = 0;
+  if(direction.equals("None")) {
+    circleA = 163;
   }
-  else if(direction == "Left") {
-    circleA = 0;
+  else if(direction.equals("Left")) {
+    circleA = 25;
   }
-  else if(direction == "Right") {
+  else if(direction.equals("Right")) {
     circleA = 100;
   }
-  else if(direction == "Up") {
+  else if(direction.equals("Up")) {
     circleA = 50;
   }
-  else if(direction == "Down") {
+  else if(direction.equals("Down")) {
     circleA = 125;
   }
-  else if(direction == "Flat") {
+  else if(direction.equals("Flat")) {
     circleA = 200;
   }
 }

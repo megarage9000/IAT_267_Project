@@ -14,6 +14,8 @@ int servoPin = A2;
 
 // digital
 int greenLed = 8;
+int redLed =  13;
+int buzzer = 12;
 
 // divider
 char divider = '|';
@@ -35,6 +37,7 @@ void loop() {
   delay(1000/60);
 }
 
+// --- Sensor Input to Processing --- 
 String packageInputVals() {
   // sensor values
   String inputPackageVals = "";
@@ -50,13 +53,6 @@ String packageInputVals() {
   // -- Read Light / Force Sensor
   inputPackageVals += analogRead(forcePin);
   return inputPackageVals;
-}
-
-void output() {
-  digitalWrite(greenLed, HIGH);
-  delay(500);
-  digitalWrite(greenLed, LOW);
-  delay(500);
 }
 
 String accelerometerRead() {
@@ -91,7 +87,55 @@ String accelerometerRead() {
 void serialEvent() {
   while(Serial.available() > 0) {
     int outputState = Serial.read();
-    output();
-
+    if(outputState == 1) {
+      win();
+    }
+    else if(outputState == 0){
+      lose();
+    }
   }
+}
+
+// --- Output from Processing to Arduino --- 
+
+const int ROTATION = 180 / 3;
+int numRotations = 0;
+
+void output() {
+  digitalWrite(greenLed, HIGH);
+  delay(500);
+  digitalWrite(greenLed, LOW);
+  delay(500);
+}
+
+void win() {
+  digitalWrite(greenLed, HIGH);
+  tone(buzzer, 1000);
+  delay(500);
+  tone(buzzer, 1500);
+  digitalWrite(greenLed, LOW);
+  tick();
+  delay(500);
+  noTone(buzzer);
+}
+
+void lose() {
+  digitalWrite(redLed, HIGH);
+  tone(buzzer, 1500);
+  delay(500);
+  tone(buzzer, 1000);
+  digitalWrite(redLed, LOW);
+  tick();
+  delay(500);
+  noTone(buzzer);
+}
+
+void tick() {
+  ticker.write(ROTATION);
+  numRotations++;
+}
+
+void resetServo() {
+  ticker.write(-numRotations * ROTATION);
+  numRotations = 0;
 }
