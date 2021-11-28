@@ -16,8 +16,11 @@ final int ERR_DIGITAL = -2;
 final int ERR_DEPACK = -909;
 final int SUCCESS_DEPACK = 909;
 
+
+final int NUM_INPUTS = 3;
 String[] inputVals;
 byte[] inputBuffer = new byte[255];
+boolean sendMode = false;
 
 // Call this method to start the port
 void initializeSerial() {
@@ -29,19 +32,19 @@ void initializeSerial() {
 
 // Depackages the incoming bytes, returns a success/error symbol
 int depackageValues() {
-  if(port.available() > 0) {
+  if(!sendMode) {
     port.readBytesUntil('\n', inputBuffer);
     if(inputBuffer != null) {
       String input = new String(inputBuffer);
       inputVals = split(input, divider);
       // Catch the case where an empty buffer is passed.
-      if(inputVals.length == 1) {
+      if(inputVals.length != NUM_INPUTS) {
         return ERR_DEPACK;
       }
       return SUCCESS_DEPACK;
     }
-    //port.clear();
   }
+  port.clear();
   return ERR_DEPACK;
 }
 /*
@@ -78,6 +81,20 @@ float getForceSensor() {
 }
 
 void outputToPort(char a) {
-  println("Sending output");
+  sendMode = true;
+  println("Sending output " + a);
   port.write(a);
+  sendMode = false;
+  //boolean finish = false;
+  //while(!finish) {
+  //  port.readBytesUntil('\n', inputBuffer);
+  //  if(inputBuffer != null) {
+  //    String receiveStr = new String(inputBuffer);
+  //    println("Received " + receiveStr + " from buffer"); 
+  //    if(receiveStr == "Finish") {
+  //      println("Received Finish from Arduino");
+  //      finish = true;
+  //    }
+  //  }
+  // }
 }

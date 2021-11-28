@@ -5,6 +5,7 @@
 MMA8452Q accel;                   // create instance of the MMA8452 class
 Servo ticker;
 char trigger;
+boolean test;
 
 // analog pins
 int potenioPin = A0;
@@ -25,20 +26,18 @@ void setup() {
 
 
 void loop() { 
-  if(Serial.available()) {
-    trigger = Serial.read();
-    Serial.flush();
-  }
-  if(trigger == '1'){
-    output();
-    trigger = '0';
-  }
-  if (trigger == '0'){
-    String inputVals = packageInputVals();
-    Serial.println(inputVals);
-  }
-
-  Serial.println(trigger);
+  String inputVals = packageInputVals();
+  Serial.println(inputVals);
+  Serial.flush();
+  delay(1000/60);
+//  if(trigger == '1'){
+//    test = true;
+//    trigger = '0';
+//  }
+//  if(test) {
+//    output();
+//    test=!test;
+//  }
 }
 
 String packageInputVals() {
@@ -60,6 +59,7 @@ void output() {
   delay(500);
   digitalWrite(greenLed, LOW);
   delay(500);
+  // Serial.println("Finish");
 }
 
 String accelerometerRead() {
@@ -87,5 +87,15 @@ String accelerometerRead() {
   }
   else {
     return "None";
+  }
+}
+
+// Calls everytime there is available information from Processing
+// https://www.arduino.cc/reference/en/language/functions/communication/serial/serialevent/
+void serialEvent() {
+  while(Serial.available() > 0) {
+    int outputState = Serial.read();
+    output();
+
   }
 }

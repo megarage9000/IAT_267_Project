@@ -34,10 +34,6 @@ void draw() {
       println("Force Sensor = " + str(forceVal));
       circleC = map(forceVal, 200, 700, 0, 255); 
     }
-    outputToPort('0');
-  }
-  else {
-    outputToPort('1');
   }
   
   fill(circleA);
@@ -50,10 +46,13 @@ void draw() {
   circle(width - circleRadius, height - circleRadius, circleRadius);
 }
 
-void keyPressed() {
-  if(key == 'a'){
-     readMode = !readMode;
-  }
+void mouseClicked() {
+  readMode = false;
+  outputToPort('1');
+}
+
+void mouseReleased() {
+  readMode = true;
 }
 
 
