@@ -32,7 +32,7 @@ void initializeSerial() {
 
 // Depackages the incoming bytes, returns a success/error symbol
 int depackageValues() {
-  if(!sendMode) {
+  if(port.available() > 0) {
     port.readBytesUntil('\n', inputBuffer);
     if(inputBuffer != null) {
       String input = new String(inputBuffer);
@@ -69,32 +69,26 @@ float getPotentiometer() {
   if(depackageValues() == ERR_DEPACK) {
     return ERR_ANALOG;
   } 
-  return float(inputVals[1]);
+  return checkForNaN(float(inputVals[1]));
 }
 
 float getForceSensor() {
   if(depackageValues() == ERR_DEPACK) {
     return ERR_ANALOG;
   } 
-  
-  return float(inputVals[2]);
+  return checkForNaN(float(inputVals[2]));
 }
 
+float checkForNaN(float value) {
+  if(Float.isNaN(value)) {
+    return ERR_ANALOG;
+  }
+  return value;
+}
+
+
+// --- Outputting to Arduino --- 
 void outputToPort(char a) {
-  sendMode = true;
   println("Sending output " + a);
   port.write(a);
-  sendMode = false;
-  //boolean finish = false;
-  //while(!finish) {
-  //  port.readBytesUntil('\n', inputBuffer);
-  //  if(inputBuffer != null) {
-  //    String receiveStr = new String(inputBuffer);
-  //    println("Received " + receiveStr + " from buffer"); 
-  //    if(receiveStr == "Finish") {
-  //      println("Received Finish from Arduino");
-  //      finish = true;
-  //    }
-  //  }
-  // }
 }

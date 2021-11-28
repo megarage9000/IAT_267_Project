@@ -18,6 +18,9 @@ int greenLed = 8;
 // divider
 char divider = '|';
 
+// Values
+String inputVals = "";
+
 void setup() {
   ticker.attach(servoPin);
   accel.init();
@@ -26,29 +29,24 @@ void setup() {
 
 
 void loop() { 
-  String inputVals = packageInputVals();
-  Serial.println(inputVals);
   Serial.flush();
+  inputVals = packageInputVals();
+  Serial.println(inputVals);
   delay(1000/60);
-//  if(trigger == '1'){
-//    test = true;
-//    trigger = '0';
-//  }
-//  if(test) {
-//    output();
-//    test=!test;
-//  }
 }
 
 String packageInputVals() {
   // sensor values
   String inputPackageVals = "";
+  
   // -- Read Accelerometer
   inputPackageVals = accelerometerRead();
   inputPackageVals += divider;
+  
   // -- Read Poteniometer
   inputPackageVals += analogRead(potenioPin);
   inputPackageVals += divider;
+  
   // -- Read Light / Force Sensor
   inputPackageVals += analogRead(forcePin);
   return inputPackageVals;
@@ -59,7 +57,6 @@ void output() {
   delay(500);
   digitalWrite(greenLed, LOW);
   delay(500);
-  // Serial.println("Finish");
 }
 
 String accelerometerRead() {
@@ -83,7 +80,6 @@ String accelerometerRead() {
     else {
       return "None";
     }
-    //delay(100);
   }
   else {
     return "None";

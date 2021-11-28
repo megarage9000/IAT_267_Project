@@ -11,29 +11,27 @@ float circleA = 0;
 float circleB = 0;
 float circleC = 0;
 float circleRadius = 50;
-boolean readMode = false;
 
 void draw() {
   background(204, 255, 204);
   
-  if(readMode == false) {
-    String accelVal = getAccelerometer();
-    float potentioVal = getPotentiometer();
-    float forceVal = getForceSensor();
-    
-    if(accelVal != ERR_ACCEL) {
-      println("Accelerometer = " + accelVal);
-      setCircleAColour(accelVal);
-    }
-    if(potentioVal != ERR_ANALOG) {
-      println("Poteniometer = " + str(potentioVal));
-      circleB = map(potentioVal, 0, 1023, 0, 255);  
-      circleRadius = map(potentioVal, 0, 1023, 50, 100);
-    }
-    if(forceVal != ERR_ANALOG) {
-      println("Force Sensor = " + str(forceVal));
-      circleC = map(forceVal, 200, 700, 0, 255); 
-    }
+ 
+  String accelVal = getAccelerometer();
+  float potentioVal = getPotentiometer();
+  float forceVal = getForceSensor();
+  
+  if(accelVal != ERR_ACCEL) {
+    println("Accelerometer = " + accelVal);
+    setCircleAColour(accelVal);
+  }
+  if(potentioVal != ERR_ANALOG) {
+    println("Poteniometer = " + str(potentioVal));
+    circleB = map(potentioVal, 0, 1023, 0, 255);  
+    circleRadius = map(potentioVal, 0, 1023, 50, 100);
+  }
+  if(forceVal != ERR_ANALOG) {
+    println("Force Sensor = " + str(forceVal));
+    circleC = map(forceVal, 200, 700, 0, 255); 
   }
   
   fill(circleA);
@@ -47,14 +45,8 @@ void draw() {
 }
 
 void mouseClicked() {
-  readMode = false;
   outputToPort('1');
 }
-
-void mouseReleased() {
-  readMode = true;
-}
-
 
 void setCircleAColour(String direction) {
   if(direction == "None") {
