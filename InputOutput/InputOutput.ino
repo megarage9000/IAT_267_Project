@@ -52,6 +52,8 @@ String packageInputVals() {
   
   // -- Read Light / Force Sensor
   inputPackageVals += analogRead(forcePin);
+  inputPackageVals += divider;
+  
   return inputPackageVals;
 }
 
@@ -84,20 +86,23 @@ String accelerometerRead() {
 
 // Calls everytime there is available information from Processing
 // https://www.arduino.cc/reference/en/language/functions/communication/serial/serialevent/
+
+const int WIN = 1;
+const int LOSE = 0;
+
 void serialEvent() {
   while(Serial.available() > 0) {
     int outputState = Serial.read();
-    if(outputState == 1) {
+    if(outputState == WIN) {
       win();
     }
-    else if(outputState == 0){
+    else if(outputState == LOSE){
       lose();
     }
   }
 }
 
 // --- Output from Processing to Arduino --- 
-
 const int ROTATION = 180 / 3;
 int numRotations = 0;
 
@@ -125,14 +130,14 @@ void lose() {
   delay(500);
   tone(buzzer, 1000);
   digitalWrite(redLed, LOW);
-  tick();
+  resetServo();
   delay(500);
   noTone(buzzer);
 }
 
 void tick() {
-  ticker.write(ROTATION);
   numRotations++;
+  ticker.write(ROTATION * numRotations);
 }
 
 void resetServo() {

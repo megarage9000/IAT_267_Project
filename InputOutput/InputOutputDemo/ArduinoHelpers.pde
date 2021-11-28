@@ -16,8 +16,6 @@ final int ERR_DIGITAL = -2;
 final int ERR_DEPACK = -909;
 final int SUCCESS_DEPACK = 909;
 
-
-final int NUM_INPUTS = 3;
 String[] inputVals;
 byte[] inputBuffer = new byte[255];
 boolean sendMode = false;
@@ -38,7 +36,7 @@ int depackageValues() {
       String input = new String(inputBuffer);
       inputVals = split(input, divider);
       // Catch the case where an empty buffer is passed.
-      if(inputVals.length != NUM_INPUTS) {
+      if(inputVals.length <= 1) {
         return ERR_DEPACK;
       }
       return SUCCESS_DEPACK;
@@ -81,6 +79,7 @@ float getForceSensor() {
 
 float checkForNaN(float value) {
   if(Float.isNaN(value)) {
+    println("NaN detected");
     return ERR_ANALOG;
   }
   return value;
