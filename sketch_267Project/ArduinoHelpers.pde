@@ -23,6 +23,8 @@ boolean sendMode = false;
 // Call this method to start the port
 void initializeSerial() {
   // String portName = Serial.list()[0];
+  
+  // --- Change port name if needed --- //
   String portName = "COM8";
   println("Using port = " + portName);
   port = new Serial(this, portName, 9600);

@@ -27,6 +27,7 @@ void setup() {
   ticker.attach(servoPin);
   accel.init();
   Serial.begin(9600);
+  ticker.write(0);
 }
 
 
