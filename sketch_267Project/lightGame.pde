@@ -56,7 +56,7 @@ class LightGame{
       if(count < 5){
         count = count + 1;
         prevGoal = goalPosition;
-        while(prevGoal + 10 > goalPosition && prevGoal - 10 < goalPosition){
+        while(prevGoal + 20 > goalPosition && prevGoal - 20 < goalPosition){  //Randomises if new goal is exactly the same as previous
           goalPosition = int(random(20, 255));
           ratioPos = int((float(goalPosition)/255)*windowHeight);
         }
