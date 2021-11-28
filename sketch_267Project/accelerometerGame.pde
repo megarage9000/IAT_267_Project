@@ -42,9 +42,17 @@ class AccelerometerGame {
   
   void accelerate(){
     //Check port for input
-    accelOrientation = myPort.readStringUntil('\n');
-    if(accelOrientation != null) orientation = accelOrientation;
-    orientation = trim(orientation);
+    
+   
+    //accelOrientation = myPort.readStringUntil('\n');
+    //if(accelOrientation != null) orientation = accelOrientation;
+    //orientation = trim(orientation);
+    
+    // --- Using Acceleromter Sensor Values --- 
+    accelOrientation = getAccelerometer();
+    if(accelOrientation != ERR_ACCEL) {
+      orientation = accelOrientation;
+    }
     
     if     (orientation.equals("Down"))   {vel.x = 0; vel.y = -1.5;}
     else if(orientation.equals("Up"))     {vel.x = 0; vel.y = 1.5;}
