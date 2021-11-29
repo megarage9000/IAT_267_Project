@@ -1,6 +1,6 @@
 //All mouse/keyboard interaction code here
 
-//For testing only
+/*For testing only
 void mouseClicked(){
   if(currGame<2) {
     currGame++;
@@ -11,15 +11,13 @@ void mouseClicked(){
     setSensor();
   }
 }
+*/
 
+void mouseReleased(){
+  inputReady = true;
+}
 
-
-
-
-
-
-
-//Button Check
+//Checks if mouse is over button, a hit detection function
 
 void buttons(){
   
