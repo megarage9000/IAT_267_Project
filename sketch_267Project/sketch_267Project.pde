@@ -30,7 +30,7 @@ final int MENU = 0;
 final int GAMEPLAY = 1;
 final int END = 2;
 
-int currGame = 0;
+int currGame = 1;
 final int LIGHT = 0;
 final int ACCEL = 1;
 final int POT = 2;
@@ -41,7 +41,7 @@ Button start;
 //Images
 PImage accelerometerBackground;
 PImage bugImg, controlPanelImg;
-PImage redButtonImg, blueButtonImg, greenButtonImg;
+PImage redButtonImg, redButtonCImg, blueButtonImg, greenButtonImg;
 //Potentiometer Items
 ArrayList<WordItem> wordItems = new ArrayList<WordItem>();
 
@@ -49,9 +49,8 @@ ArrayList<WordItem> wordItems = new ArrayList<WordItem>();
 void setup(){
   size(1400,800);
   
-  //loading Images and buttons *DOES NOTHING YET*
+  //loading Images
   loadImages();
-  loadButtons();
   
   //Port
   String portName = Serial.list()[0]; //List all ports to find correct one
@@ -168,16 +167,11 @@ void loadImages(){
   bugImg = loadImage("bugImg.png");
   blueButtonImg = loadImage("blueButton.png");
   redButtonImg = loadImage("redButton.png");
+  redButtonCImg = loadImage("redButtonClick.png");
   greenButtonImg = loadImage("greenButton.png");
   controlPanelImg = loadImage("controlPanel.png");
   
 }
-
-//For loading buttons 
-void loadButtons(){
-  //...
-}
-
 
 
 //-----------------Potentiometer Game Itmes-------------------
