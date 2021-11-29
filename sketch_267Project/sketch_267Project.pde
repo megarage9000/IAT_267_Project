@@ -41,9 +41,13 @@ Button start;
 //Images
 PImage accelerometerBackground;
 PImage bugImg, controlPanelImg;
-PImage redButtonImg, redButtonCImg, blueButtonImg, greenButtonImg;
+PImage redButtonImg, redButtonCImg, blueButtonImg, blueButtonCImg, greenButtonImg, greenButtonCImg;
+
 //Potentiometer Items
 ArrayList<WordItem> wordItems = new ArrayList<WordItem>();
+
+//Accelerometer
+boolean inputReady = true;
 
 
 void setup(){
@@ -166,9 +170,11 @@ void loadImages(){
   accelerometerBackground = loadImage("accelerometerBackground.jpg");
   bugImg = loadImage("bugImg.png");
   blueButtonImg = loadImage("blueButton.png");
+  blueButtonCImg = loadImage("blueButtonClick.png");
   redButtonImg = loadImage("redButton.png");
   redButtonCImg = loadImage("redButtonClick.png");
   greenButtonImg = loadImage("greenButton.png");
+  greenButtonCImg = loadImage("greenButtonClick.png");
   controlPanelImg = loadImage("controlPanel.png");
   
 }
