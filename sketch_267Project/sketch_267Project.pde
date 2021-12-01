@@ -25,7 +25,7 @@ LightGame liGame = new LightGame();
 PotGame poGame = new PotGame();
 
 //Gamestate Controls
-int state = 1;
+int state = 0;
 final int MENU = 0;
 final int GAMEPLAY = 1;
 final int END = 2;
@@ -36,9 +36,11 @@ final int ACCEL = 1;
 final int POT = 2;
 
 //Buttons
-Button start;
+Button startButton;
+Button helpButton;
 
 //Images
+PImage mainMenuBG, startButtonIMG, helpButtonIMG;
 PImage accelerometerBackground;
 PImage bugImg, controlPanelImg;
 PImage redButtonImg, redButtonCImg, blueButtonImg, blueButtonCImg, greenButtonImg, greenButtonCImg;
@@ -60,8 +62,9 @@ void setup(){
   String portName = Serial.list()[0]; //List all ports to find correct one
   myPort = new Serial(this, Serial.list()[0], 9600);
 
-  
-  start = new Button(700,800,100,100);
+  //Buttons
+  startButton = new Button(startButtonIMG, 300, 600, startButtonIMG);
+  helpButton = new Button(helpButtonIMG, 750, 600, helpButtonIMG);
   
   setSensor();
 }
@@ -123,6 +126,9 @@ void loadImages(){
   greenButtonImg = loadImage("greenButton.png");
   greenButtonCImg = loadImage("greenButtonClick.png");
   controlPanelImg = loadImage("controlPanel.png");
+  mainMenuBG = loadImage("background.png");
+  startButtonIMG = loadImage("startButton.png");
+  helpButtonIMG = loadImage("helpButton.png");
   
 }
 
