@@ -210,30 +210,36 @@ class AccelerometerGame {
   
   //Checks for mouseClicks
   void checkClick(){
-    if(mousePressed && redButton.Hit && inputReady) {
-      redButton.clicked(1);  //red button
-      if(numCSequence[currAnswer] == 1) {
-        answers[currAnswer] = true;
+    if(mousePressed && redButton.Hit) {
+      redButton.clicked(1);  //red button animation
+      if(inputReady){
+        if(numCSequence[currAnswer] == 1) {
+          answers[currAnswer] = true;
+        }
+        inputReady = false;
       }
-      inputReady = false;
     }
     else redButton.clicked(0);
     
-    if(mousePressed && greenButton.Hit && inputReady) {
-      greenButton.clicked(1); //green button
-      if(numCSequence[currAnswer] == 2) {
-        answers[currAnswer] = true;
+    if(mousePressed && greenButton.Hit) {
+      greenButton.clicked(1); //green button animation
+      if(inputReady){
+        if(numCSequence[currAnswer] == 2) {
+          answers[currAnswer] = true;
+        }
+        inputReady = false;
       }
-      inputReady = false;
     }
     else greenButton.clicked(0);
     
-    if(mousePressed && blueButton.Hit && inputReady) {
-      blueButton.clicked(1); //blue button
-      if(numCSequence[currAnswer] == 3) {
-        answers[currAnswer] = true;
+    if(mousePressed && blueButton.Hit) {
+      blueButton.clicked(1); //blue button animation
+      if(inputReady){
+        if(numCSequence[currAnswer] == 3) {
+          answers[currAnswer] = true;
+        }
+        inputReady = false;
       }
-      inputReady = false;
     }
     else blueButton.clicked(0);
   }
