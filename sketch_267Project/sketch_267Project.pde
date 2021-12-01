@@ -30,7 +30,7 @@ final int MENU = 0;
 final int GAMEPLAY = 1;
 final int END = 2;
 
-int currGame = 1;
+int currGame = 0;
 final int LIGHT = 0;
 final int ACCEL = 1;
 final int POT = 2;
@@ -42,7 +42,7 @@ Button helpButton;
 //Images
 PImage mainMenuBG, startButtonIMG, helpButtonIMG;
 PImage accelerometerBackground;
-PImage bugImg, controlPanelImg;
+PImage bugImg, controlPanelImg, controlPanelImg2;
 PImage redButtonImg, redButtonCImg, blueButtonImg, blueButtonCImg, greenButtonImg, greenButtonCImg;
 
 //Potentiometer Items
@@ -126,6 +126,7 @@ void loadImages(){
   greenButtonImg = loadImage("greenButton.png");
   greenButtonCImg = loadImage("greenButtonClick.png");
   controlPanelImg = loadImage("controlPanel.png");
+  controlPanelImg2= loadImage("controlPanel2.png");
   mainMenuBG = loadImage("background.png");
   startButtonIMG = loadImage("startButton.png");
   helpButtonIMG = loadImage("helpButton.png");
