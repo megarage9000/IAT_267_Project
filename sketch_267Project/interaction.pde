@@ -1,17 +1,13 @@
 //All mouse/keyboard interaction code here
 
-/*For testing only
+
 void mouseClicked(){
-  if(currGame<2) {
-    currGame++;
-    setSensor();
-  }
-  else if(currGame == 2){
-    currGame = 0;
-    setSensor();
+  if(startButton.Hit) {
+     state = GAMEPLAY;
+     currGame = LIGHT;
   }
 }
-*/
+
 
 void mouseReleased(){
   inputReady = true;
@@ -20,5 +16,9 @@ void mouseReleased(){
 //Checks if mouse is over button, a hit detection function
 
 void buttons(){
+  if(overImg(startButton)) startButton.Hit = true;
+  else startButton.Hit = false;
   
+  if(overImg(helpButton)) helpButton.Hit = true;
+  else helpButton.Hit = false;
 }
