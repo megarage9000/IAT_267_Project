@@ -2,12 +2,15 @@ class AccelerometerGame {
   //Movement
   PVector vel;
   PVector bugPos;
-  PVector upForce =new PVector(0, -0.75);
-  PVector downForce =new PVector(0, 0.75);
-  PVector leftForce =new PVector(-0.75, 0);
-  PVector rightForce =new PVector(0.75, 0);
+  PVector upForce =new PVector(0, -0.45);
+  PVector downForce =new PVector(0, 0.45);
+  PVector leftForce =new PVector(-0.45, 0);
+  PVector rightForce =new PVector(0.45, 0);
   String orientation = "a";
-  color bc = color(0,0);
+  color bc = color(0,140);
+  color prog1 = color(255,0,0);
+  color prog2 = color(255,0,0);
+  color prog3 = color(255,0,0);
   float damp = 0.8;
   
   //Timer
@@ -33,12 +36,27 @@ class AccelerometerGame {
   
   AccelerometerGame(){
     //Bug vectors
-    bugPos = new PVector(0,0);
+    int randomSpawn = (int)random(1,5);
+    switch(randomSpawn){
+      case 1:
+        bugPos = new PVector(120,120);
+        break;
+      case 2:
+        bugPos = new PVector(1300,60);
+        break;
+      case 3:
+        bugPos = new PVector(1300,740);
+        break;
+      case 4:
+        bugPos = new PVector(130, 640);
+        break;
+      default:
+    }
     vel = new PVector(0,0);
     
     //Generate unique answer set  1=Red 2=Green 3=Blue
     for(int i = 0; i<3; i++){
-      int generator = (int)random(1,3);
+      int generator = (int)random(1,4);
       numCSequence[i] = generator;
       if(generator == 1) colorSequence[i] = color(255,0,0);
       else if(generator == 2) colorSequence[i] = color(0,255,0);
@@ -54,12 +72,14 @@ class AccelerometerGame {
     
     //Goal box
     fill(bc);
+    noStroke();
     rect(windowWidth/2-28, windowHeight/2-60, 192,120);
     
     //Bug
     render();
     accelerate();
     update();
+    checkWalls();
     
     //Timer
     if(!start) {
@@ -67,14 +87,27 @@ class AccelerometerGame {
       start = true;
       loadButtons();
     }
-    textSize(100);
-    text(timeLeft-passedTime/1000, 400,100);
     
     //Buttons
-    image(controlPanelImg, 0,100);
+    image(controlPanelImg2, 0, 430);
+    image(controlPanelImg, 0, 100);
     redButton.render();
     greenButton.render();
     blueButton.render();
+    
+    //Timer
+    textSize(30);
+    fill(5,150,0);
+    text("TIME:", 50, 765);
+    text(timeLeft-passedTime/1000, 130, 765);
+    
+    //Progress bar
+    fill(prog1);
+    rect(300,735,20,40);
+    fill(prog2);
+    rect(350,735,20,40);
+    fill(prog3);
+    rect(400,735,20,40);
     
     //Check mouse
     buttonCheck();
@@ -83,13 +116,13 @@ class AccelerometerGame {
     println("1" +answers[0]);
     println("2" +answers[1]);
     println("3" +answers[2]);
+    println("X = " + bugPos.x + " Y = " +bugPos.y);
     
     /* ---------------GAME STATES ------------------------------*/
     //Check if bug is over box
     if(goalCheck()){
       //Show sequence of colour
       showSequence();
-      //myPort.write('1');
     }else{
       sequenceCounter = 0;
     }
@@ -100,10 +133,8 @@ class AccelerometerGame {
     
     //Check if game failed
     if(passedTime < timeLimit) passedTime = millis() - currTime;
-    if(passedTime > timeLimit){
-      
-       //currTime = millis();
-       //println("run");
+    else if(passedTime > timeLimit){
+      //failGame();      
     }
     
   }
@@ -121,9 +152,9 @@ class AccelerometerGame {
   }
   
   void loadButtons(){
-    redButton = new Button(redButtonImg, 50, 150, redButtonCImg);
-    greenButton = new Button(greenButtonImg, 50, 300, greenButtonCImg);
-    blueButton = new Button(blueButtonImg, 50, 450, blueButtonCImg);
+    redButton = new Button(redButtonImg, 60, 200, redButtonCImg);
+    greenButton = new Button(greenButtonImg, 60, 320, greenButtonCImg);
+    blueButton = new Button(blueButtonImg, 60, 450, blueButtonCImg);
   }
   
   void accelerate(){
@@ -186,7 +217,6 @@ class AccelerometerGame {
   
   //Call when player passes game
   void advanceGame(){
-    start = false;  //Reset Timer
     println("all answers correct, game passed");
     //currGame++; will uncomment on final version
   }
@@ -247,8 +277,29 @@ class AccelerometerGame {
   
   //because mousePressed is stupid and mouseClicked cannot be called as a bool
   void currAnswerAdvance(){
-     if(answers[0] == true) currAnswer = 1;
-     if(answers[0] == true && answers[1] == true) currAnswer = 2;
+     if(answers[0] == true) {
+       currAnswer = 1;
+       prog1 = color(100,220,0);
+     }
+     if(answers[0] == true && answers[1] == true) {
+       currAnswer = 2;
+       prog2 = color(100,220,0);
+     }
+     if(answers[0] == true && answers[1] == true && answers[2] == true) {
+       prog3 = color(100,220,0);
+     }
+  }
+  
+  void checkWalls(){
+    //Walls
+    if(bugPos.x >= width-bugImg.width/2) bugPos.x = width-bugImg.width/2;
+    if(bugPos.x <= 0+bugImg.width/2) bugPos.x = 0+bugImg.width/2;
+    if(bugPos.y >= height-bugImg.height/2) bugPos.y = height-bugImg.height/2;
+    if(bugPos.y <= 0+bugImg.height/2) bugPos.y = 0+bugImg.height/2;
+    
+    int x = (int)bugPos.x;
+    int y = (int)bugPos.y;
+    //Control panels
   }
 }
 
