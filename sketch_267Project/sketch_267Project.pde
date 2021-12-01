@@ -10,7 +10,7 @@ import processing.serial.*;
 Serial myPort;
 String accelOrientation;
 
-int valP_light; // Data received from the serial port - variable to store the light sensor reading
+float valP_light; // Data received from the serial port - variable to store the light sensor reading
 int valP_slider; // Data received from the serial port - variable to store the slider sensor reading
 int valP_button;
 

@@ -39,6 +39,7 @@ int depackageValues() {
       inputVals = split(input, divider);
       // Catch the case where an empty buffer is passed.
       if(inputVals.length <= 1) {
+        port.clear();
         return ERR_DEPACK;
       }
       return SUCCESS_DEPACK;

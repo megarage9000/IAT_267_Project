@@ -1,5 +1,5 @@
 class LightGame{
-  float pot;
+  float forceVal;
   int count;
   int timer;
   int maxTimer;
@@ -21,7 +21,7 @@ class LightGame{
       ratioPos = int((float(goalPosition)/255)*windowHeight);//----------------------------
     }
     
-    heightPos = int((float(valP_light)/255)*windowHeight);//------------------------
+    heightPos = int((forceVal/255)*windowHeight);//------------------------
     
     fakePot();//Takes input
     fill(100, 200, 200);
@@ -40,7 +40,7 @@ class LightGame{
     textSize(25);
     text("Search Count:  /5", 200, 290);
     text(count, 370, 290);
-    if(valP_light < goalPosition + 10 && valP_light > goalPosition - 10 && count < 5){ //If sensor is within range of the goal
+    if(forceVal < goalPosition + 10 && forceVal > goalPosition - 10 && count < 5){ //If sensor is within range of the goal
       timer = timer + 1;
       if(timer > timerLength){
         cleared = true;
@@ -75,16 +75,14 @@ class LightGame{
   void fakePot(){
    //fake potentiometer using mouseY
    float wHeight = windowHeight;
-   // pot = (mouseY/wHeight)*255;  //To control with sensor just comment out this line of code (ie do not remove it)
+   // forceVal = (mouseY/wHeight)*255;  //To control with sensor just comment out this line of code (ie do not remove it)
    
    // --- Using Light / Force Sensor Values --- 
-   float lightValue = getForceSensor();
-   if(lightValue != ERR_ANALOG) {
+   float sensorValue = getForceSensor();
+   if(sensorValue != ERR_ANALOG) {
      // --- Values here will need to be changed if using force sensor ---
-     pot = lightValue;
-     pot = map(pot, 512, 890, 0, 255);
+     forceVal = sensorValue;
+     forceVal =  map(forceVal, 0, 1023, 0, 255);
    }
-   
-   valP_light = int(pot);
   }
 }

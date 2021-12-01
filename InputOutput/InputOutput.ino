@@ -32,9 +32,9 @@ void setup() {
 
 
 void loop() { 
-  Serial.flush();
   inputVals = packageInputVals();
   Serial.println(inputVals);
+  delay(1000/60);
 }
 
 // --- Sensor Input to Processing --- 
