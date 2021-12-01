@@ -68,59 +68,6 @@ void setup(){
 
 //Main
 void draw(){
-
-
-  //if (0 < port.available()) { // If data is available to read,
-    
-  //  println(" ");
-    
-  //  port.readBytesUntil('&', inBuffer);  //read in all data until '&' is encountered
-    
-  //  if (inBuffer != null) {
-  //    String myString = new String(inBuffer);
-  //    //println(myString);  //for testing only
-      
-      
-  //    //p is all sensor data (with a's and b's) ('&' is eliminated) ///////////////
-      
-  //    String[] p = splitTokens(myString, "&");  
-  //    if (p.length < 2) return;  //exit this function if packet is broken
-  //    //println(p[0]);   //for testing only
-      
-      
-  //    //get light sensor reading //////////////////////////////////////////////////
-      
-  //    String[] light_sensor = splitTokens(p[0], "a");  //get light sensor reading 
-  //    if (light_sensor.length != 3) return;  //exit this function if packet is broken
-  //    //println(light_sensor[1]);
-  //    valP_light = int(light_sensor[1]);
-      
-  //    print("light sensor:");
-  //    print(valP_light);
-  //    println(" ");  
-
-
-  //    //get slider sensor reading //////////////////////////////////////////////////
-      
-  //    String[] slider_sensor = splitTokens(p[0], "b");  //get slider sensor reading 
-  //    if (slider_sensor.length != 3) return;  //exit this function if packet is broken
-  //    //println(slider_sensor[1]);
-  //    valP_slider = int(slider_sensor[1]);
-
-  //    print("slider sensor:");
-  //    print(valP_slider);
-  //    println(" "); 
-      
-      
-      
-      
-  //    String[] button_sensor = splitTokens(p[0], "c");  //get light sensor reading 
-  //    if (button_sensor.length != 3) return;  //exit this function if packet is broken
-  //    valP_light = int(button_sensor[1]);
-      
-  //  }
-  //}
-  
   
   background(50); //Placeholder since we dont have image background yet
   
