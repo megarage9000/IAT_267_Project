@@ -93,6 +93,14 @@ void draw(){
   }
 
 }
+//---------------------------------------pass or fail Game
+void passGame(){
+  //show pass screen
+}
+
+void failGame(){
+  //show fail screen
+}
 
 //---------------------------------------Processing to Arduino--------------------------------------
 void setSensor(){
