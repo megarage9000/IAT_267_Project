@@ -112,7 +112,7 @@ void win() {
       printWins();
       outputToPort(1);
       prevWins = currentWins;
-  }
+  };
 }
 
 void lose() {
