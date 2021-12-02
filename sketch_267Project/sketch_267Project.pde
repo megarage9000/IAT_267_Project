@@ -102,10 +102,13 @@ void passGame(){
   imgRender(advanceGameBG, width/2, height/2);
   advanceButton.render();
   
-  //for(int i = 0; i<2; i++){
-  //  rect(800+i*100, 300, 100,50);
-  //}
-  
+  for(int i = 0; i<3; i++){
+    strokeWeight(3);
+    stroke(4,151,2);
+    if(i<=currGame) fill(4,151,2);
+    else fill(0);
+    rect(775+i*110, 300, 100,50);
+  }
 }
 
 void failGame(){
