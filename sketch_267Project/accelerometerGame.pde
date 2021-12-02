@@ -128,7 +128,7 @@ class AccelerometerGame {
     currAnswerAdvance();
     
     //Check if game passed
-    if(answers[0] && answers[1] && answers[2]) advanceGame();
+    if(answers[0] && answers[1] && answers[2]) passGame();
     
     //Check if game failed
     if(passedTime < timeLimit) passedTime = millis() - currTime;

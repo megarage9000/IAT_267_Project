@@ -38,10 +38,11 @@ final int POT = 2;
 //Buttons
 Button startButton;
 Button helpButton;
+Button advanceButton;
 
 //Images
 PImage mainMenuBG;
-PImage startButtonIMG, helpButtonIMG;
+PImage startButtonIMG, helpButtonIMG, advanceButtonImg;
 PImage accelerometerBackground, advanceGameBG, loseGameBG;
 PImage bugImg, controlPanelImg, controlPanelImg2;
 PImage redButtonImg, redButtonCImg, blueButtonImg, blueButtonCImg, greenButtonImg, greenButtonCImg;
@@ -66,6 +67,7 @@ void setup(){
   //Buttons
   startButton = new Button(startButtonIMG, 300, 600, startButtonIMG);
   helpButton = new Button(helpButtonIMG, 750, 600, helpButtonIMG);
+  advanceButton = new Button(advanceButtonImg, 700,600, advanceButtonImg);
   
   setSensor();
 }
@@ -97,10 +99,26 @@ void draw(){
 //---------------------------------------pass or fail Game
 void passGame(){
   //show pass screen
+  imgRender(advanceGameBG, width/2, height/2);
+  advanceButton.render();
+  
+  //for(int i = 0; i<2; i++){
+  //  rect(800+i*100, 300, 100,50);
+  //}
+  
 }
 
 void failGame(){
   //show fail screen
+  imgRender(loseGameBG, width/2, height/2);
+}
+
+void imgRender(PImage img, float x, float y){
+  //Center coordinates to image
+    pushMatrix();
+    translate(x,y);
+    image(img, -img.width/2, -img.height/2, img.width, img.height);
+    popMatrix();  
 }
 
 //---------------------------------------Processing to Arduino--------------------------------------
@@ -141,7 +159,7 @@ void loadImages(){
   helpButtonIMG = loadImage("helpButton.png");
   advanceGameBG = loadImage("advanceGameBG.png");
   loseGameBG = loadImage("loseGameBG.png");
-  
+  advanceButtonImg = loadImage("advanceButton.png");
 }
 
 

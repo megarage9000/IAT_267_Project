@@ -5,6 +5,10 @@ void mouseClicked(){
   if(startButton.Hit) {
      state = GAMEPLAY;
   }
+  
+  if(advanceButton.Hit){
+    currGame++;
+  }
 }
 
 
@@ -20,4 +24,7 @@ void buttons(){
   
   if(overImg(helpButton)) helpButton.Hit = true;
   else helpButton.Hit = false;
+  
+  if(overImg(advanceButton)) advanceButton.Hit = true;
+  else advanceButton.Hit = false;
 }
