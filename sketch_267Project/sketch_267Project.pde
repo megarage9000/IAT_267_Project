@@ -60,7 +60,7 @@ void setup(){
   //loading Images
   loadImages();
   // --- Initalizes Serial stuff, see ArduinoHelpers --- 
-  initializeSerial();
+  // initializeSerial();
   //Buttons
   startButton = new Button(startButtonIMG, 300, 600, startButtonIMG);
   helpButton = new Button(helpButtonIMG, 750, 600, helpButtonIMG);
@@ -97,6 +97,7 @@ void passGame(){
   //show pass screen
   imgRender(advanceGameBG, width/2, height/2);
   advanceButton.render();
+  // -- Uncomment for sensors
   win();
   //for(int i = 0; i<2; i++){
   //  rect(800+i*100, 300, 100,50);
@@ -107,7 +108,8 @@ void passGame(){
 void failGame(){
   //show fail screen
   imgRender(loseGameBG, width/2, height/2);
-  lose();
+  // -- Uncomment for sensors
+  // lose();
 }
 
 void imgRender(PImage img, float x, float y){

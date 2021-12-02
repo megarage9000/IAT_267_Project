@@ -161,12 +161,12 @@ class AccelerometerGame {
     //accelOrientation = myPort.readStringUntil('\n');
     //if(accelOrientation != null) orientation = accelOrientation;
     //orientation = trim(orientation);
-    
+    orientation = "None";
     // --- Using Acceleromter Sensor Values --- 
-    accelOrientation = getAccelerometer();
-    if(accelOrientation != ERR_ACCEL) {
-      orientation = accelOrientation;
-    }
+    //accelOrientation = getAccelerometer();
+    //if(accelOrientation != ERR_ACCEL) {
+    //  orientation = accelOrientation;
+    //}
     
     if(orientation.equals("Down")) vel.add(upForce);
     if(orientation.equals("Up"))   vel.add(downForce);
