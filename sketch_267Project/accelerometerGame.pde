@@ -116,7 +116,6 @@ class AccelerometerGame {
     println("1" +answers[0]);
     println("2" +answers[1]);
     println("3" +answers[2]);
-    println("X = " + bugPos.x + " Y = " +bugPos.y);
     
     /* ---------------GAME STATES ------------------------------*/
     //Check if bug is over box
@@ -163,8 +162,6 @@ class AccelerometerGame {
       myPort.clear();
     }
     accelOrientation = myPort.readStringUntil('\n');
-    //println(accelOrientation);
-    //println(myPort.readStringUntil('\n'));
     if(accelOrientation != null) {
       orientation = accelOrientation;
       orientation = trim(orientation);

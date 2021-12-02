@@ -40,8 +40,9 @@ Button startButton;
 Button helpButton;
 
 //Images
-PImage mainMenuBG, startButtonIMG, helpButtonIMG;
-PImage accelerometerBackground;
+PImage mainMenuBG;
+PImage startButtonIMG, helpButtonIMG;
+PImage accelerometerBackground, advanceGameBG, loseGameBG;
 PImage bugImg, controlPanelImg, controlPanelImg2;
 PImage redButtonImg, redButtonCImg, blueButtonImg, blueButtonCImg, greenButtonImg, greenButtonCImg;
 
@@ -138,6 +139,8 @@ void loadImages(){
   mainMenuBG = loadImage("background.png");
   startButtonIMG = loadImage("startButton.png");
   helpButtonIMG = loadImage("helpButton.png");
+  advanceGameBG = loadImage("advanceGameBG.png");
+  loseGameBG = loadImage("loseGameBG.png");
   
 }
 
