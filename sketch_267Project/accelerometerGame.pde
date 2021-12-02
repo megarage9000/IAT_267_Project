@@ -163,6 +163,7 @@ class AccelerometerGame {
     //orientation = trim(orientation);
     orientation = "None";
     // --- Using Acceleromter Sensor Values --- 
+    // -- Uncomment for sensors
     //accelOrientation = getAccelerometer();
     //if(accelOrientation != ERR_ACCEL) {
     //  orientation = accelOrientation;

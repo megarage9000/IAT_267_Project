@@ -132,15 +132,15 @@ class PotGame{
   void fakePot(){
    //fake potentiometer using mouseY
    float wHeight = windowHeight;
-   //pot = (mouseY/wHeight)*255;
-   //pot = valP_slider;
+   pot = (mouseY/wHeight)*255;
    
    // --- Using Poteniometer Sensor Values ---
-   float potValue = getPotentiometer();
-   if(potValue != ERR_ANALOG) {
-     pot = potValue;
-     pot = map(pot, 32, 1024, 0, 255);
-   }
+   // -- Uncomment for sensors
+  // float potValue = getPotentiometer();
+  // if(potValue != ERR_ANALOG) {
+  //   pot = potValue;
+  //   pot = map(pot, 32, 1024, 0, 255);
+  // }
   }
   
   void overlap(){
