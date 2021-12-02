@@ -69,6 +69,7 @@ class LightGame{
         //------------------------------------------
         fill(0,0,0);
         text("(level clear text)", 200, 350);
+        passGame();
     }
   }
   

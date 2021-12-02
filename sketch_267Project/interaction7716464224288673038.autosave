@@ -25,6 +25,7 @@ void buttons(){
   if(overImg(helpButton)) helpButton.Hit = true;
   else helpButton.Hit = false;
   
-  if(overImg(advanceButton)) advanceButton.Hit = true;
-  else advanceButton.Hit = false;
+  if(overImg(advanceButton)) advanceButton.Hit = true; ceButtt = false;
+    setToOutput;e);
+      }
 }

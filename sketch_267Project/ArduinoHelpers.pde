@@ -18,7 +18,6 @@ final int SUCCESS_DEPACK = 909;
 
 String[] inputVals;
 byte[] inputBuffer = new byte[255];
-boolean sendMode = false;
 
 // Call this method to start the port
 void initializeSerial() {
@@ -95,15 +94,41 @@ float checkForNaN(float value) {
 
 
 // --- Outputting to Arduino --- 
+boolean setOutput = true;
+int prevWins = 0;
+int currentWins = 0;
+
 void outputToPort(int val) {
-  println("Sending output " + str(val));
-  port.write(val);
+  if(setOutput) {
+    println("Sending output " + str(val));
+    port.write(val);
+    setToOutput(false);
+  }
 }
 
 void win() {
-  outputToPort(1);
+  currentWins++;
+  if(currentWins != prevWins) {
+      printWins();
+      outputToPort(1);
+      prevWins = currentWins;
+  }
 }
 
 void lose() {
-  outputToPort(0);
+  currentWins = 0;
+  if(currentWins != prevWins) {
+      printWins();
+      outputToPort(0);
+      prevWins = currentWins;
+  } 
+}
+
+void printWins() {
+  println("current wins = " + str(currentWins));
+  println("previous wins = " + str(prevWins));
+}
+
+void setToOutput(boolean value) {
+  setOutput = value;
 }

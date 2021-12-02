@@ -25,35 +25,47 @@ LightGame liGame = new LightGame();
 PotGame poGame = new PotGame();
 
 //Gamestate Controls
-int state = 1;
+int state = 0;
 final int MENU = 0;
 final int GAMEPLAY = 1;
 final int END = 2;
 
-int currGame = 1;
+int currGame = 0;
 final int LIGHT = 0;
 final int ACCEL = 1;
 final int POT = 2;
 
 //Buttons
-Button start;
+Button startButton;
+Button helpButton;
+Button advanceButton;
 
 //Images
-PImage accelerometerBackground;
-PImage bugImg;
+PImage mainMenuBG;
+PImage startButtonIMG, helpButtonIMG, advanceButtonImg;
+PImage accelerometerBackground, advanceGameBG, loseGameBG;
+PImage bugImg, controlPanelImg, controlPanelImg2;
+PImage redButtonImg, redButtonCImg, blueButtonImg, blueButtonCImg, greenButtonImg, greenButtonCImg;
+
 //Potentiometer Items
 ArrayList<WordItem> wordItems = new ArrayList<WordItem>();
+
+//Accelerometer
+boolean inputReady = true;
 
 
 void setup(){
   size(1400,800);
   
-  //loading Images and buttons *DOES NOTHING YET*
+  //loading Images
   loadImages();
-  loadButtons();
   // --- Initalizes Serial stuff, see ArduinoHelpers --- 
   initializeSerial();
-  start = new Button(700,800,100,100);
+  //Buttons
+  startButton = new Button(startButtonIMG, 300, 600, startButtonIMG);
+  helpButton = new Button(helpButtonIMG, 750, 600, helpButtonIMG);
+  advanceButton = new Button(advanceButtonImg, 700,600, advanceButtonImg);
+  
 }
 
 //Main
@@ -80,21 +92,52 @@ void draw(){
   }
 
 }
+//---------------------------------------pass or fail Game
+void passGame(){
+  //show pass screen
+  imgRender(advanceGameBG, width/2, height/2);
+  advanceButton.render();
+  win();
+  //for(int i = 0; i<2; i++){
+  //  rect(800+i*100, 300, 100,50);
+  //}
+  
+}
 
+void failGame(){
+  //show fail screen
+  imgRender(loseGameBG, width/2, height/2);
+  lose();
+}
 
+void imgRender(PImage img, float x, float y){
+  //Center coordinates to image
+    pushMatrix();
+    translate(x,y);
+    image(img, -img.width/2, -img.height/2, img.width, img.height);
+    popMatrix();  
+}
 
 //--------------------------------------- Loading Var-----------------------------------------------
 //For loading images used for UI and Interface
 void loadImages(){
   accelerometerBackground = loadImage("accelerometerBackground.jpg");
   bugImg = loadImage("bugImg.png");
+  blueButtonImg = loadImage("blueButton.png");
+  blueButtonCImg = loadImage("blueButtonClick.png");
+  redButtonImg = loadImage("redButton.png");
+  redButtonCImg = loadImage("redButtonClick.png");
+  greenButtonImg = loadImage("greenButton.png");
+  greenButtonCImg = loadImage("greenButtonClick.png");
+  controlPanelImg = loadImage("controlPanel.png");
+  controlPanelImg2= loadImage("controlPanel2.png");
+  mainMenuBG = loadImage("background.png");
+  startButtonIMG = loadImage("startButton.png");
+  helpButtonIMG = loadImage("helpButton.png");
+  advanceGameBG = loadImage("advanceGameBG.png");
+  loseGameBG = loadImage("loseGameBG.png");
+  advanceButtonImg = loadImage("advanceButton.png");
 }
-
-//For loading buttons 
-void loadButtons(){
-  //...
-}
-
 
 
 //-----------------Potentiometer Game Itmes-------------------
