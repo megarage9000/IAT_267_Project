@@ -37,31 +37,31 @@ void packageAndSend(int val, char divider, int waitTime=0) {
 
 void loop() {
   // put your main code here, to run repeatedly:
-//  lightVal = analogRead(A0);
-//  potVal = analogRead(A1);
-//
-//  packageAndSend(lightVal, lightDivider);
-//  packageAndSend(potVal, potDivider);
-//  delay(1000);
+  lightVal = analogRead(A0);
+  potVal = analogRead(A1);
 
-//  Accelerometer Code
-  if (accel.available()) {      // Wait for new data from accelerometer
-    // Orientation of board (Right, Left, Down, Up);
-    if (accel.isRight() == true) {
-      Serial.println("Right");
-    }
-    else if (accel.isLeft() == true) {
-      Serial.println("Left");
-    }
-    else if (accel.isUp() == true) {
-      Serial.println("Up");
-    }
-    else if (accel.isDown() == true) {
-      Serial.println("Down");
-    }
-    else if (accel.isFlat() == true) {
-      Serial.println("Flat");
-    }
-  }
-  delay(100);
+  packageAndSend(lightVal, lightDivider);
+  packageAndSend(potVal, potDivider);
+  delay(1000);
+
+  //Accelerometer Code
+//  if (accel.available()) {      // Wait for new data from accelerometer
+//    // Orientation of board (Right, Left, Down, Up);
+//    if (accel.isRight() == true) {
+//      Serial.println("Right");
+//    }
+//    else if (accel.isLeft() == true) {
+//      Serial.println("Left");
+//    }
+//    else if (accel.isUp() == true) {
+//      Serial.println("Up");
+//    }
+//    else if (accel.isDown() == true) {
+//      Serial.println("Down");
+//    }
+//    else if (accel.isFlat() == true) {
+//      Serial.println("Flat");
+//    }
+//  }
+//  delay(100);
 }
