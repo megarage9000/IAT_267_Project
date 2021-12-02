@@ -25,39 +25,48 @@ LightGame liGame = new LightGame();
 PotGame poGame = new PotGame();
 
 //Gamestate Controls
-int state = 1;
+int state = 0;
 final int MENU = 0;
 final int GAMEPLAY = 1;
 final int END = 2;
 
-int currGame = 1;
+int currGame = 0;
 final int LIGHT = 0;
 final int ACCEL = 1;
 final int POT = 2;
 
 //Buttons
-Button start;
+Button startButton;
+Button helpButton;
 
 //Images
+PImage mainMenuBG, startButtonIMG, helpButtonIMG;
 PImage accelerometerBackground;
-PImage bugImg;
+PImage bugImg, controlPanelImg, controlPanelImg2;
+PImage redButtonImg, redButtonCImg, blueButtonImg, blueButtonCImg, greenButtonImg, greenButtonCImg;
+
 //Potentiometer Items
 ArrayList<WordItem> wordItems = new ArrayList<WordItem>();
+
+//Accelerometer
+boolean inputReady = true;
 
 
 void setup(){
   size(1400,800);
   
-  //loading Images and buttons *DOES NOTHING YET*
+  //loading Images
   loadImages();
-  loadButtons();
   
   //Port
   String portName = Serial.list()[0]; //List all ports to find correct one
   myPort = new Serial(this, Serial.list()[0], 9600);
 
+  //Buttons
+  startButton = new Button(startButtonIMG, 300, 600, startButtonIMG);
+  helpButton = new Button(helpButtonIMG, 750, 600, helpButtonIMG);
   
-  start = new Button(700,800,100,100);
+  setSensor();
 }
 
 //Main
@@ -85,6 +94,24 @@ void draw(){
 
 }
 
+//---------------------------------------Processing to Arduino--------------------------------------
+void setSensor(){
+  
+  switch (currGame){
+    case LIGHT:
+      myPort.write("forceSet");
+      break;
+    case ACCEL:
+      myPort.write("accelSet");
+      break;
+    case POT:
+      myPort.write("potentioSet");
+      break;
+    default:
+    break;
+  }
+      
+}
 
 
 //--------------------------------------- Loading Var-----------------------------------------------
@@ -92,13 +119,19 @@ void draw(){
 void loadImages(){
   accelerometerBackground = loadImage("accelerometerBackground.jpg");
   bugImg = loadImage("bugImg.png");
+  blueButtonImg = loadImage("blueButton.png");
+  blueButtonCImg = loadImage("blueButtonClick.png");
+  redButtonImg = loadImage("redButton.png");
+  redButtonCImg = loadImage("redButtonClick.png");
+  greenButtonImg = loadImage("greenButton.png");
+  greenButtonCImg = loadImage("greenButtonClick.png");
+  controlPanelImg = loadImage("controlPanel.png");
+  controlPanelImg2= loadImage("controlPanel2.png");
+  mainMenuBG = loadImage("background.png");
+  startButtonIMG = loadImage("startButton.png");
+  helpButtonIMG = loadImage("helpButton.png");
+  
 }
-
-//For loading buttons 
-void loadButtons(){
-  //...
-}
-
 
 
 //-----------------Potentiometer Game Itmes-------------------
