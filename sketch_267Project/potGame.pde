@@ -3,25 +3,71 @@ class PotGame{
   float pot;
   float distance;
   float opacity;
-  float searchArea = 70;
+  float searchArea = 60;
   IntList potPasscode;
+  IntList foundLetters;
   boolean overlap;
   float randX;
   float randY;
   float randZ;
   float prevZ;
   boolean rerun = false;
+  float removeNumber;
+  int numsRemoved;
+  boolean penalty;
+  boolean win;
+  boolean dupe;
+
   
   PotGame(){
     int potVal = 0;
-    
+
   }
   
   void gameplay(){
+    
     //I am doing this wrong but I just want to initialise the list of words
     if(doOnce){begin();}
     
+    if(checkAnswer){
+      penalty = true;
+      dupe = false;
+      for(int i=0; i<potPasscode.size(); i++){
+        if(float(saved) == potPasscode.get(i)){
+          
+          for(int j=0; j<foundLetters.size(); j++){
+            if(int(saved) == foundLetters.get(j)){
+              dupe = true;
+            }
+          }
+          
+          if(dupe == false){
+            foundLetters.append(int(saved));
+            numsRemoved = numsRemoved + 1;
+            removeNumber = float(saved);
+            penalty = false;
+          }
+        }
+      }
+      if(penalty){
+        //Add time penalty
+        //something like: Game's Timer = Game's Timer - 30;
+      }
+      
+      if(numsRemoved > 4){
+        win = true;       
+        //Add some code here to update global progress bar
+      }
+      
+     checkAnswer = false; 
+    }
     
+    fill(255,255,255);
+        textSize(30);
+
+    text("Input: " + typing,600,50);
+    text("Non-pair Numbers Found :" + numsRemoved + "/5",70,50);
+  
     //update text items
     for(int i=0; i<wordItems.size(); i++){
       WordItem currItem = wordItems.get(i);
@@ -34,26 +80,36 @@ class PotGame{
       opacity = (distance/searchArea)*255;
       if(opacity > 255){opacity = 0;}
       fill(255, opacity);
+      if(removeNumber == currItem.letterID){
+        fill(0,0);
+      }
       currItem.updateLetter();
+    }
+    if(win){
+       text("Number Dowsing Module Complete",70,100); 
+       passGame();
     }
     fakePot();
   }
   
-  //this is totally wrong i know
+  //RUNS this code once at the start
   void begin(){
+    
+    foundLetters = new IntList();
+
     //list of numbers
     //Generates 5 pairs of numbers, each pair has everything random except the number
     for(int i=0; i<5; i++){
       
-      //I AM AWARE THAT I HAVE REPEATED THE EXACT SAME BLOCK OF CODE THREE TIMES, BUT I CANNOT BE FUCKED TO CHANGE IT BECAUSE IT IS SUCH A SMALL PROJECT CODING WISE
+      //I AM AWARE THAT I HAVE REPEATED THE EXACT SAME BLOCK OF CODE THREE TIMES, BUT I CANNOT BE BOTHERED TO CHANGE IT BECAUSE IT ONLY RUNS ONE TIME
       
       
       int randLetter = int(random(200));
       overlap = true;
       while(overlap){
         randX = random(20, windowWidth - 150);
-        randY = random(50, windowHeight - 50);
-        randZ = random(80, 300);
+        randY = random(150, windowHeight - 50);
+        randZ = random(-20, 280);
         rerun = false;
         for(int j=0; j<wordItems.size(); j++){
           WordItem currItem = wordItems.get(j);
@@ -61,8 +117,12 @@ class PotGame{
           if(randX > currItem.position.x && randX < currItem.position.x + 50 &&
              randY > currItem.position.y && randY < currItem.position.y + 50 &&
              randZ > currItem.zPos - searchArea && randZ < currItem.zPos + searchArea 
-             )
-            rerun = true;
+             ){
+            rerun = true;}
+          if(randLetter == currItem.letterID)
+            { 
+              rerun = true; 
+            }
           }
         prevZ = randZ;
         if(rerun == false || wordItems.size() == 0){
@@ -73,8 +133,8 @@ class PotGame{
       overlap = true;
       while(overlap){
         randX = random(20, windowWidth - 150);
-        randY = random(50, windowHeight - 50);
-        randZ = random(-40, 300);
+        randY = random(150, windowHeight - 50);
+        randZ = random(-20, 280);
         rerun = false;
         for(int j=0; j<wordItems.size(); j++){
           WordItem currItem = wordItems.get(j);
@@ -107,8 +167,8 @@ class PotGame{
       overlap = true;
       while(overlap){
         randX = random(20, windowWidth - 150);
-        randY = random(50, windowHeight - 50);
-        randZ = random(-40, 300);
+        randY = random(150, windowHeight - 50);
+        randZ = random(-20, 280);
         rerun = false;
         for(int j=0; j<wordItems.size(); j++){
           WordItem currItem = wordItems.get(j);
@@ -117,8 +177,12 @@ class PotGame{
              randZ > currItem.zPos - searchArea && randZ < currItem.zPos + searchArea 
              )
             rerun = true;
-          }
-        
+          
+          if(randLetter == currItem.letterID)
+            { 
+              rerun = true; 
+            }
+        }
         if(rerun == false || wordItems.size() == 0){
           overlap = false;
         }
@@ -132,7 +196,8 @@ class PotGame{
   void fakePot(){
    //fake potentiometer using mouseY
    float wHeight = windowHeight;
-   pot = (mouseY/wHeight)*255;
+//<<<<<<< HEAD
+   // pot = (mouseY/wHeight)*255; //Comment out to control by potentiometer
    
    // --- Using Poteniometer Sensor Values ---
    // -- Uncomment for sensors
@@ -141,10 +206,13 @@ class PotGame{
      pot = potValue;
      pot = map(pot, 32, 1024, 0, 255);
    }
+//=======
+//   pot = valP_slider;
+//   pot = (mouseY/wHeight)*255;    //Comment out to control by potentiometer
+//>>>>>>> main
   }
   
-  void overlap(){
-    
+  void overlap(){ 
+    //why was this here
   }
-  
 }

@@ -71,6 +71,7 @@ class LightGame{
         text("(level clear text)", 200, 350);
         passGame();
     }
+    println(count);
   }
   
   void fakePot(){
@@ -86,5 +87,10 @@ class LightGame{
      forceVal = sensorValue;
      forceVal =  map(forceVal, 50, 1023, 0, 255);
    }
+  }
+  
+  //Resets game
+  void reset(){
+    count = 0;
   }
 }

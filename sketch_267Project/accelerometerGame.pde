@@ -300,24 +300,44 @@ class AccelerometerGame {
     int y = (int)bugPos.y;
     //Control panels
   }
+  
+  void reset(){
+    //Reset answers
+    for(int i =0; i<3; i++){
+      answers[i] = false;
+    }
+    sequenceCounter = 0;
+    currAnswer = 0;
+    prog1 = color(255,0,0);
+    prog2 = color(255,0,0);
+    prog3 = color(255,0,0);
+    //Generate new unique answer set  1=Red 2=Green 3=Blue
+    for(int i = 0; i<3; i++){
+      int generator = (int)random(1,4);
+      numCSequence[i] = generator;
+      if(generator == 1) colorSequence[i] = color(255,0,0);
+      else if(generator == 2) colorSequence[i] = color(0,255,0);
+      else if(generator == 3) colorSequence[i] = color(0,100,255);
+    }
+  }
 }
 
 //TEMPORARY KEYBOARD MOVEMENT
 boolean up, down, left ,right;
 
-void keyPressed(){
-  if(key == 'W' || key == 'w') up = true;
-  if(key == 'S' || key == 's') down = true;
-  if(key == 'A' || key == 'a') left = true;
-  if(key == 'D' || key == 'd') right = true;
-}
+//void keyPressed(){
+//  if(key == 'W' || key == 'w') up = true;
+//  if(key == 'S' || key == 's') down = true;
+//  if(key == 'A' || key == 'a') left = true;
+//  if(key == 'D' || key == 'd') right = true;
+//}
 
-void keyReleased(){
-  if(key == 'W' || key == 'w') up = false;
-  if(key == 'S' || key == 's') down = false;
-  if(key == 'A' || key == 'a') left = false;
-  if(key == 'D' || key == 'd') right = false;
-}
+//void keyReleased(){
+//  if(key == 'W' || key == 'w') up = false;
+//  if(key == 'S' || key == 's') down = false;
+//  if(key == 'A' || key == 'a') left = false;
+//  if(key == 'D' || key == 'd') right = false;
+//}
 
 
   
