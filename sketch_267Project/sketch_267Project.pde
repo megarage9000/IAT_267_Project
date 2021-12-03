@@ -70,7 +70,7 @@ void setup(){
 
 //Main
 void draw(){
-  
+  loopSensorInput();
   background(50); //Placeholder since we dont have image background yet
   
   buttons(); //important for interaction, *REFRESHES ALL BUTTONS TO CHECK IF THEYRE CLICKED*

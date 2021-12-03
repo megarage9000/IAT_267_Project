@@ -47,6 +47,29 @@ int depackageValues() {
   port.clear();
   return ERR_DEPACK;
 }
+
+String accelerometer = ERR_ACCEL;
+float forceSensor = ERR_ANALOG;
+float poteniometer = ERR_ANALOG;
+
+void loopSensorInput() {
+    if(port.available() > 0) {
+      port.readBytesUntil('\n', inputBuffer);
+      if(inputBuffer != null) {
+        String input = new String(inputBuffer);
+        inputVals = split(input, divider);
+        // Catch the case where an empty buffer is passed.
+        if(inputVals.length <= 1) {
+          port.clear();
+          return;
+        }
+        accelerometer = inputVals[0];
+        forceSensor = float(inputVals[1]);
+        poteniometer = float(inputVals[2]);
+      }
+  }
+  port.clear();
+}
 /*
   --- Input byte structure
   [Accelerometer String]|[Potentiometer Value]|[Force Value]|[Button 1...2...3...n values]
@@ -59,27 +82,17 @@ int depackageValues() {
 
 // --- Getting sensor input ---
 String getAccelerometer() {
-  if(depackageValues() == ERR_DEPACK) {
-    return ERR_ACCEL;
-  } 
-  println("Accelerometer Value = " + inputVals[0]);
-  return inputVals[0];
+  return accelerometer;
 }
 
 float getPotentiometer() {
-  if(depackageValues() == ERR_DEPACK) {
-    return ERR_ANALOG;
-  } 
-  float value = checkForNaN(float(inputVals[1]));
+  float value = checkForNaN(poteniometer);
   println("Potentiometer value = " + str(value));
   return value;
 }
 
 float getForceSensor() {
-  if(depackageValues() == ERR_DEPACK) {
-    return ERR_ANALOG;
-  } 
-  float value = checkForNaN(float(inputVals[2]));
+  float value = checkForNaN(forceSensor);
   println("Force Value = " + str(value));
   return value;
 }
