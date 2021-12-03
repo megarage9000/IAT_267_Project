@@ -5,6 +5,7 @@ class PotGame{
   float opacity;
   float searchArea = 60;
   IntList potPasscode;
+  IntList foundLetters;
   boolean overlap;
   float randX;
   float randY;
@@ -15,10 +16,12 @@ class PotGame{
   int numsRemoved;
   boolean penalty;
   boolean win;
+  boolean dupe;
+
   
   PotGame(){
     int potVal = 0;
-    
+
   }
   
   void gameplay(){
@@ -28,11 +31,22 @@ class PotGame{
     
     if(checkAnswer){
       penalty = true;
+      dupe = false;
       for(int i=0; i<potPasscode.size(); i++){
         if(float(saved) == potPasscode.get(i)){
-          numsRemoved = numsRemoved + 1;
-          removeNumber = float(saved);
-          penalty = false;
+          
+          for(int j=0; j<foundLetters.size(); j++){
+            if(int(saved) == foundLetters.get(j)){
+              dupe = true;
+            }
+          }
+          
+          if(dupe == false){
+            foundLetters.append(int(saved));
+            numsRemoved = numsRemoved + 1;
+            removeNumber = float(saved);
+            penalty = false;
+          }
         }
       }
       if(penalty){
@@ -41,8 +55,10 @@ class PotGame{
       }
       
       if(numsRemoved > 4){
-        win = true;        
+        win = true;       
+        //Add some code here to update global progress bar
       }
+      
      checkAnswer = false; 
     }
     
@@ -78,6 +94,9 @@ class PotGame{
   
   //RUNS this code once at the start
   void begin(){
+    
+    foundLetters = new IntList();
+
     //list of numbers
     //Generates 5 pairs of numbers, each pair has everything random except the number
     for(int i=0; i<5; i++){
@@ -98,8 +117,12 @@ class PotGame{
           if(randX > currItem.position.x && randX < currItem.position.x + 50 &&
              randY > currItem.position.y && randY < currItem.position.y + 50 &&
              randZ > currItem.zPos - searchArea && randZ < currItem.zPos + searchArea 
-             )
-            rerun = true;
+             ){
+            rerun = true;}
+          if(randLetter == currItem.letterID)
+            { 
+              rerun = true; 
+            }
           }
         prevZ = randZ;
         if(rerun == false || wordItems.size() == 0){
@@ -154,8 +177,12 @@ class PotGame{
              randZ > currItem.zPos - searchArea && randZ < currItem.zPos + searchArea 
              )
             rerun = true;
-          }
-        
+          
+          if(randLetter == currItem.letterID)
+            { 
+              rerun = true; 
+            }
+        }
         if(rerun == false || wordItems.size() == 0){
           overlap = false;
         }
