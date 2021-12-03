@@ -27,6 +27,30 @@ void mouseReleased(){
   inputReady = true;
 }
 
+//Picks up keyboard for pot game
+void keyPressed() {
+ if(currGame == 2){   
+   //If the return key is pressed, save the String and clear it
+  if (key == '\n' ) {
+    saved = typing;
+    checkAnswer = true;
+    // A String can be cleared by setting it equal to ""
+    typing = ""; 
+  } else if(key == BACKSPACE){
+      if(typing.length() > 0){
+      typing = typing.substring( 0, typing.length()-1 );
+      }
+  }
+  else {
+    // Otherwise, concatenate the String
+    // Each character typed by the user is added to the end of the String variable.
+    if(str(key).matches("-?[0-9]+")){
+      typing = typing + key; 
+   }
+    }
+   }
+  }
+
 //Checks if mouse is over button, a hit detection function
 
 void buttons(){
