@@ -67,11 +67,7 @@ class PotGame{
 
     text("Input: " + typing,600,50);
     text("Non-pair Numbers Found :" + numsRemoved + "/5",70,50);
-    if(win){
-       text("Number Dowsing Module Complete",70,100); 
-    }
-
-
+  
     //update text items
     for(int i=0; i<wordItems.size(); i++){
       WordItem currItem = wordItems.get(i);
@@ -88,6 +84,10 @@ class PotGame{
         fill(0,0);
       }
       currItem.updateLetter();
+    }
+    if(win){
+       text("Number Dowsing Module Complete",70,100); 
+       passGame();
     }
     fakePot();
   }
