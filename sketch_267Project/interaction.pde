@@ -9,6 +9,17 @@ void mouseClicked(){
   if(advanceButton.Hit){
     currGame++;
   }
+  
+  //Main menu and resets all game states
+  if(menuButton.Hit && exit){
+    state = MENU;
+    currGame = LIGHT;
+    exit = false;
+    
+    liGame.reset();
+    acGame.reset();
+    //-----------Add potgame.reset() here
+  }
 }
 
 
@@ -27,4 +38,7 @@ void buttons(){
   
   if(overImg(advanceButton)) advanceButton.Hit = true;
   else advanceButton.Hit = false;
+  
+  if(overImg(menuButton)) menuButton.Hit = true;
+  else menuButton.Hit = false;
 }

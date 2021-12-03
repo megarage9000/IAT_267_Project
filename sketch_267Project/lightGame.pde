@@ -71,6 +71,7 @@ class LightGame{
         text("(level clear text)", 200, 350);
         passGame();
     }
+    println(count);
   }
   
   void fakePot(){
@@ -78,5 +79,10 @@ class LightGame{
    float wHeight = windowHeight;
    pot = (mouseY/wHeight)*255;  //To control with sensor just comment out this line of code (ie do not remove it)
    valP_light = int(pot);
+  }
+  
+  //Resets game
+  void reset(){
+    count = 0;
   }
 }
