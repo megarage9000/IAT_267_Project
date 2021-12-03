@@ -14,6 +14,7 @@ class PotGame{
   float removeNumber;
   int numsRemoved;
   boolean penalty;
+  boolean win;
   
   PotGame(){
     int potVal = 0;
@@ -36,11 +37,11 @@ class PotGame{
       }
       if(penalty){
         //Add time penalty
+        //something like: Game's Timer = Game's Timer - 30;
       }
       
       if(numsRemoved > 4){
-        //win state
-        
+        win = true;        
       }
      checkAnswer = false; 
     }
@@ -50,6 +51,9 @@ class PotGame{
 
     text("Input: " + typing,600,50);
     text("Non-pair Numbers Found :" + numsRemoved + "/5",70,50);
+    if(win){
+       text("Number Dowsing Module Complete",70,100); 
+    }
 
 
     //update text items
@@ -165,14 +169,11 @@ class PotGame{
   void fakePot(){
    //fake potentiometer using mouseY
    float wHeight = windowHeight;
-   pot = (mouseY/wHeight)*255;
-   //pot = valP_slider;
+   pot = valP_slider;
+   pot = (mouseY/wHeight)*255;    //Comment out to control by potentiometer
   }
   
-  void overlap(){
-    
+  void overlap(){ 
+    //why was this here
   }
-  
-
-  
 }
