@@ -164,10 +164,10 @@ class AccelerometerGame {
     orientation = "None";
     // --- Using Acceleromter Sensor Values --- 
     // -- Uncomment for sensors
-    //accelOrientation = getAccelerometer();
-    //if(accelOrientation != ERR_ACCEL) {
-    //  orientation = accelOrientation;
-    //}
+    accelOrientation = getAccelerometer();
+    if(accelOrientation != ERR_ACCEL) {
+      orientation = accelOrientation;
+    }
     
     if(orientation.equals("Down")) vel.add(upForce);
     if(orientation.equals("Up"))   vel.add(downForce);

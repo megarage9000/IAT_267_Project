@@ -60,7 +60,7 @@ void setup(){
   //loading Images
   loadImages();
   // --- Initalizes Serial stuff, see ArduinoHelpers --- 
-  // initializeSerial();
+  initializeSerial();
   //Buttons
   startButton = new Button(startButtonIMG, 300, 600, startButtonIMG);
   helpButton = new Button(helpButtonIMG, 750, 600, helpButtonIMG);
@@ -70,7 +70,7 @@ void setup(){
 
 //Main
 void draw(){
-  loopSensorInput();
+  depackageValues();
   background(50); //Placeholder since we dont have image background yet
   
   buttons(); //important for interaction, *REFRESHES ALL BUTTONS TO CHECK IF THEYRE CLICKED*

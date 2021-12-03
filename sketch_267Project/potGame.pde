@@ -136,11 +136,11 @@ class PotGame{
    
    // --- Using Poteniometer Sensor Values ---
    // -- Uncomment for sensors
-  // float potValue = getPotentiometer();
-  // if(potValue != ERR_ANALOG) {
-  //   pot = potValue;
-  //   pot = map(pot, 32, 1024, 0, 255);
-  // }
+   float potValue = getPotentiometer();
+   if(potValue != ERR_ANALOG) {
+     pot = potValue;
+     pot = map(pot, 32, 1024, 0, 255);
+   }
   }
   
   void overlap(){

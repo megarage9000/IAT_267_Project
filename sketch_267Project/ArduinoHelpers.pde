@@ -29,8 +29,10 @@ void initializeSerial() {
   port = new Serial(this, portName, 9600);
 }
 
+boolean canRead = false;
+
 // Depackages the incoming bytes, returns a success/error symbol
-int depackageValues() {
+void depackageValues() {
   if(port.available() > 0) {
     port.readBytesUntil('\n', inputBuffer);
     if(inputBuffer != null) {
@@ -39,37 +41,20 @@ int depackageValues() {
       // Catch the case where an empty buffer is passed.
       if(inputVals.length <= 1) {
         port.clear();
-        return ERR_DEPACK;
+        canRead = false;
+        return;
       }
-      return SUCCESS_DEPACK;
+      canRead = true;
+      return;
     }
   }
   port.clear();
-  return ERR_DEPACK;
+  canRead = false;
 }
 
 String accelerometer = ERR_ACCEL;
 float forceSensor = ERR_ANALOG;
 float poteniometer = ERR_ANALOG;
-
-void loopSensorInput() {
-    if(port.available() > 0) {
-      port.readBytesUntil('\n', inputBuffer);
-      if(inputBuffer != null) {
-        String input = new String(inputBuffer);
-        inputVals = split(input, divider);
-        // Catch the case where an empty buffer is passed.
-        if(inputVals.length <= 1) {
-          port.clear();
-          return;
-        }
-        accelerometer = inputVals[0];
-        forceSensor = float(inputVals[1]);
-        poteniometer = float(inputVals[2]);
-      }
-  }
-  port.clear();
-}
 /*
   --- Input byte structure
   [Accelerometer String]|[Potentiometer Value]|[Force Value]|[Button 1...2...3...n values]
@@ -82,16 +67,28 @@ void loopSensorInput() {
 
 // --- Getting sensor input ---
 String getAccelerometer() {
+  if(!canRead){
+    return ERR_ACCEL;
+  }
+  accelerometer = inputVals[0];
   return accelerometer;
 }
 
 float getPotentiometer() {
+  if(!canRead){
+    return ERR_ANALOG;
+  }
+  poteniometer = float(inputVals[1]);
   float value = checkForNaN(poteniometer);
   println("Potentiometer value = " + str(value));
   return value;
 }
 
 float getForceSensor() {
+  if(!canRead) {
+    return ERR_ANALOG;
+  }
+  forceSensor = float(inputVals[2]);
   float value = checkForNaN(forceSensor);
   println("Force Value = " + str(value));
   return value;

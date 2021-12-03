@@ -75,16 +75,16 @@ class LightGame{
   
   void fakePot(){
    //fake potentiometer using mouseY
-   float wHeight = windowHeight;
-   forceVal = (mouseY/wHeight)*255;  //To control with sensor just comment out this line of code (ie do not remove it)
+   //float wHeight = windowHeight;
+   //forceVal = (mouseY/wHeight)*255;  //To control with sensor just comment out this line of code (ie do not remove it)
    
    // --- Using Light / Force Sensor Values ---
    // -- Uncomment for sensors
-   //float sensorValue = getForceSensor();
-   //if(sensorValue != ERR_ANALOG) {
-   //  // --- Values here will need to be changed if using force sensor ---
-   //  forceVal = sensorValue;
-   //  forceVal =  map(forceVal, 0, 1023, 0, 255);
-   //}
+   float sensorValue = getForceSensor();
+   if(sensorValue != ERR_ANALOG) {
+     // --- Values here will need to be changed if using force sensor ---
+     forceVal = sensorValue;
+     forceVal =  map(forceVal, 50, 1023, 0, 255);
+   }
   }
 }
