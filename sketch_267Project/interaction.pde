@@ -10,6 +10,8 @@ void mouseClicked(){
     currGame++;
   }
   
+  
+  
   //Main menu and resets all game states
   if(menuButton.Hit && exit){
     state = MENU;
@@ -26,6 +28,15 @@ void mouseClicked(){
 void mouseReleased(){
   inputReady = true;
 }
+
+
+    // Variable to store text currently being typed
+  String typing = "";
+  
+  // Variable to store saved text when return is hit
+  String saved = "";
+  
+  boolean checkAnswer;
 
 //Picks up keyboard for pot game
 void keyPressed() {
