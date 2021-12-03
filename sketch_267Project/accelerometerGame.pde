@@ -323,19 +323,19 @@ class AccelerometerGame {
 //TEMPORARY KEYBOARD MOVEMENT
 boolean up, down, left ,right;
 
-void keyPressed(){
-  if(key == 'W' || key == 'w') up = true;
-  if(key == 'S' || key == 's') down = true;
-  if(key == 'A' || key == 'a') left = true;
-  if(key == 'D' || key == 'd') right = true;
-}
+//void keyPressed(){
+//  if(key == 'W' || key == 'w') up = true;
+//  if(key == 'S' || key == 's') down = true;
+//  if(key == 'A' || key == 'a') left = true;
+//  if(key == 'D' || key == 'd') right = true;
+//}
 
-void keyReleased(){
-  if(key == 'W' || key == 'w') up = false;
-  if(key == 'S' || key == 's') down = false;
-  if(key == 'A' || key == 'a') left = false;
-  if(key == 'D' || key == 'd') right = false;
-}
+//void keyReleased(){
+//  if(key == 'W' || key == 'w') up = false;
+//  if(key == 'S' || key == 's') down = false;
+//  if(key == 'A' || key == 'a') left = false;
+//  if(key == 'D' || key == 'd') right = false;
+//}
 
 
   
