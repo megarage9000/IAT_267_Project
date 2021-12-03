@@ -3,7 +3,7 @@ class PotGame{
   float pot;
   float distance;
   float opacity;
-  float searchArea = 70;
+  float searchArea = 60;
   IntList potPasscode;
   boolean overlap;
   float randX;
@@ -11,6 +11,9 @@ class PotGame{
   float randZ;
   float prevZ;
   boolean rerun = false;
+  float removeNumber;
+  int numsRemoved;
+  boolean penalty;
   
   PotGame(){
     int potVal = 0;
@@ -18,10 +21,37 @@ class PotGame{
   }
   
   void gameplay(){
+    
     //I am doing this wrong but I just want to initialise the list of words
     if(doOnce){begin();}
     
+    if(checkAnswer){
+      penalty = true;
+      for(int i=0; i<potPasscode.size(); i++){
+        if(float(saved) == potPasscode.get(i)){
+          numsRemoved = numsRemoved + 1;
+          removeNumber = float(saved);
+          penalty = false;
+        }
+      }
+      if(penalty){
+        //Add time penalty
+      }
+      
+      if(numsRemoved > 4){
+        //win state
+        
+      }
+     checkAnswer = false; 
+    }
     
+    fill(255,255,255);
+        textSize(30);
+
+    text("Input: " + typing,600,50);
+    text("Non-pair Numbers Found :" + numsRemoved + "/5",70,50);
+
+
     //update text items
     for(int i=0; i<wordItems.size(); i++){
       WordItem currItem = wordItems.get(i);
@@ -34,26 +64,29 @@ class PotGame{
       opacity = (distance/searchArea)*255;
       if(opacity > 255){opacity = 0;}
       fill(255, opacity);
+      if(removeNumber == currItem.letterID){
+        fill(0,0);
+      }
       currItem.updateLetter();
     }
     fakePot();
   }
   
-  //this is totally wrong i know
+  //RUNS this code once at the start
   void begin(){
     //list of numbers
     //Generates 5 pairs of numbers, each pair has everything random except the number
     for(int i=0; i<5; i++){
       
-      //I AM AWARE THAT I HAVE REPEATED THE EXACT SAME BLOCK OF CODE THREE TIMES, BUT I CANNOT BE FUCKED TO CHANGE IT BECAUSE IT IS SUCH A SMALL PROJECT CODING WISE
+      //I AM AWARE THAT I HAVE REPEATED THE EXACT SAME BLOCK OF CODE THREE TIMES, BUT I CANNOT BE BOTHERED TO CHANGE IT BECAUSE IT ONLY RUNS ONE TIME
       
       
       int randLetter = int(random(200));
       overlap = true;
       while(overlap){
         randX = random(20, windowWidth - 150);
-        randY = random(50, windowHeight - 50);
-        randZ = random(80, 300);
+        randY = random(150, windowHeight - 50);
+        randZ = random(-20, 280);
         rerun = false;
         for(int j=0; j<wordItems.size(); j++){
           WordItem currItem = wordItems.get(j);
@@ -73,8 +106,8 @@ class PotGame{
       overlap = true;
       while(overlap){
         randX = random(20, windowWidth - 150);
-        randY = random(50, windowHeight - 50);
-        randZ = random(-40, 300);
+        randY = random(150, windowHeight - 50);
+        randZ = random(-20, 280);
         rerun = false;
         for(int j=0; j<wordItems.size(); j++){
           WordItem currItem = wordItems.get(j);
@@ -107,8 +140,8 @@ class PotGame{
       overlap = true;
       while(overlap){
         randX = random(20, windowWidth - 150);
-        randY = random(50, windowHeight - 50);
-        randZ = random(-40, 300);
+        randY = random(150, windowHeight - 50);
+        randZ = random(-20, 280);
         rerun = false;
         for(int j=0; j<wordItems.size(); j++){
           WordItem currItem = wordItems.get(j);
@@ -133,12 +166,13 @@ class PotGame{
    //fake potentiometer using mouseY
    float wHeight = windowHeight;
    pot = (mouseY/wHeight)*255;
-      pot = valP_slider;
-
+   //pot = valP_slider;
   }
   
   void overlap(){
     
   }
+  
+
   
 }
