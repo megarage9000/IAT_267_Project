@@ -4,7 +4,6 @@
 void mouseClicked(){
   if(startButton.Hit) {
      state = GAMEPLAY;
-     setToOutput(true);
   }
   
   if(advanceButton.Hit){
