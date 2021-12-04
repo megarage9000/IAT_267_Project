@@ -125,6 +125,10 @@ void lose() {
     outputToPort(0);
 }
 
+void reset() {
+  outputToPort(2);
+}
+
 
 
 void setToOutput(boolean value) {

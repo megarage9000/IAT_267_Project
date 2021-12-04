@@ -36,23 +36,7 @@ class AccelerometerGame {
 
   
   AccelerometerGame(){
-    //Bug vectors
-    int randomSpawn = (int)random(1,5);
-    switch(randomSpawn){
-      case 1:
-        bugPos = new PVector(120,120);
-        break;
-      case 2:
-        bugPos = new PVector(1300,60);
-        break;
-      case 3:
-        bugPos = new PVector(1300,740);
-        break;
-      case 4:
-        bugPos = new PVector(130, 640);
-        break;
-      default:
-    }
+    spawnBug();
     vel = new PVector(0,0);
     
     //Generate unique answer set  1=Red 2=Green 3=Blue
@@ -145,6 +129,26 @@ class AccelerometerGame {
   void update(){
     bugPos.add(vel);
     vel.mult(damp);
+  }
+  
+  void spawnBug() {
+    //Bug vectors
+    int randomSpawn = (int)random(1,5);
+    switch(randomSpawn){
+      case 1:
+        bugPos = new PVector(120,120);
+        break;
+      case 2:
+        bugPos = new PVector(1300,60);
+        break;
+      case 3:
+        bugPos = new PVector(1300,740);
+        break;
+      case 4:
+        bugPos = new PVector(130, 640);
+        break;
+      default:
+    }
   }
   
   void render(){
@@ -328,6 +332,7 @@ class AccelerometerGame {
     passedTime = 0;
     gameFin = false;
     start = false;
+    spawnBug();
   }
 }
 

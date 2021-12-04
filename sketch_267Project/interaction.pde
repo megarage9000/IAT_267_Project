@@ -21,6 +21,7 @@ void mouseClicked(){
     
     liGame.reset();
     acGame.reset();
+    poGame.reset();
     //-----------Add potgame.reset() here
   }
 }

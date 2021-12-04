@@ -90,6 +90,7 @@ String accelerometerRead() {
 
 const int WIN = 1;
 const int LOSE = 0;
+const int RESET = 2;
 
 void serialEvent() {
   while(Serial.available() > 0) {
@@ -100,6 +101,10 @@ void serialEvent() {
     else if(outputState == LOSE){
       lose();
     }
+    else if(outputState == RESET) {
+      resetServo();
+    }
+    
   }
 }
 

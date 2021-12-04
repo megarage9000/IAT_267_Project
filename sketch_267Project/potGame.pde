@@ -74,7 +74,7 @@
 
     text("Input: " + typing,600,50);
     text("Non-pair Numbers Found :" + numsRemoved + "/5",70,50);
-     text("Attempts made :" + numPenalties + "/" + MAX_PENALTIES, 600,100);
+     text("Failed attempts until failure :" + numPenalties + "/" + MAX_PENALTIES, 600,100);
   
     //update text items
     for(int i=0; i<wordItems.size(); i++){
@@ -105,7 +105,6 @@
   
   //RUNS this code once at the start
   void begin(){
-    
     foundLetters = new IntList();
 
     //list of numbers
@@ -202,6 +201,9 @@
     }
     println(potPasscode);
     doOnce = false;
+    
+    win = false;
+    lose = false;
   }
   
   void fakePot(){
@@ -215,9 +217,12 @@
      pot = potValue;
      pot = map(pot, 32, 1024, 0, 255);
    }
-  }
+  } 
   
-  void overlap(){ 
-    //why was this here
+  void reset() {
+    doOnce = true;
+    numsRemoved = 0;
+    numPenalties = 0;
+    wordItems = new ArrayList<WordItem>();
   }
 }
