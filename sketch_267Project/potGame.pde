@@ -16,7 +16,10 @@
   int numsRemoved;
   boolean penalty;
   boolean win;
+  boolean lose = false;
   boolean dupe;
+  int MAX_PENALTIES = 4;
+  int numPenalties = 0;
 
   
   PotGame(){
@@ -52,6 +55,10 @@
       if(penalty){
         //Add time penalty
         //something like: Game's Timer = Game's Timer - 30;
+        numPenalties++;
+        if(numPenalties == MAX_PENALTIES) {
+           lose = true;
+        }
       }
       
       if(numsRemoved > 4){
@@ -67,6 +74,7 @@
 
     text("Input: " + typing,600,50);
     text("Non-pair Numbers Found :" + numsRemoved + "/5",70,50);
+     text("Attempts made :" + numPenalties + "/" + MAX_PENALTIES, 600,100);
   
     //update text items
     for(int i=0; i<wordItems.size(); i++){
@@ -88,6 +96,9 @@
     if(win){
        text("Number Dowsing Module Complete",70,100); 
        passGame();
+    }
+    else if(lose) {
+      failGame();
     }
     fakePot();
   }
