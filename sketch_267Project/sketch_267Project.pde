@@ -124,6 +124,8 @@ void passGame(){
 void failGame(){
   //show fail screen
   imgRender(loseGameBG, width/2, height/2);
+  menuButton.render();
+  exit = true;
 }
 
 void imgRender(PImage img, float x, float y){
