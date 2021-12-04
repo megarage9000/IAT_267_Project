@@ -25,12 +25,15 @@ class LightGame{
   
   void gameplay(){
     
+    background(forceBG);
     //Timer
     if(!start) {
       startTimer();
       start = true;
     }
     
+    noStroke();
+    //Goal 
     if (goalPosition == 0){  //Randomises position of goal during startup
       goalPosition = int(random(20, 255));  //----------------------
       ratioPos = int((float(goalPosition)/255)*windowHeight);//----------------------------
@@ -38,29 +41,27 @@ class LightGame{
     
     heightPos = int((float(valP_light)/255)*windowHeight);//------------------------
     
+    //Goal
     fakePot();//Takes input
-    fill(100, 200, 200);
+    fill(227, 176, 0);
     if(count < 5){
-      rect(windowWidth/1.5 - 20, ratioPos + 30, 240, -60);} //draw goal if not finished
-    fill(255, 0 ,0);
+      image(resistorImg, windowWidth/1.5-20 - resistorImg.width + 3, ratioPos + 30 - resistorImg.height + 101 );    //resistor img
+      rect(windowWidth/1.5 - 20, ratioPos + 30, 240, -60);
+    } //draw goal if not finished
+    fill(255, 0 ,0, 150);
     rect(windowWidth/1.5, 0, 200, heightPos); //displays sensor position
     
-    //Timer UI
-    textSize(30);
-    fill(5,150,0);
-    text("TIME LEFT:", 50, 765);
-    text(timeLeft-passedTime/1000, 220, 765);
-    
-    //UI
+    //Text Ui
     fill(150,150,150);
-    rect(190, 190, 230, 40);//background of bar
-    rect(190, 250, 230, 150);//text background
-    fill(255,255,255);
-    rect(200, 200, (float(timer)/float(timerLength)) * 200, 20);  //Loading bar
+    rect(120, 190, 230, 40);//background of bar
+    rect(120, 250, 230, 100);//text background
+    fill(100,255,0);
+    rect(130, 200, (float(timer)/float(timerLength)) * 200, 20);  //Loading bar
     fill(0,0,0);
     textSize(25);
-    text("Search Count:  /5", 200, 290);
-    text(count, 370, 290);
+    fill(255,255,255);
+    text("Resistors:   /5", 145, 305);
+    text(count, 270, 305);
     if(valP_light < goalPosition + 10 && valP_light > goalPosition - 10 && count < 5){ //If sensor is within range of the goal
       timer = timer + 1;
       if(timer > timerLength){
@@ -72,6 +73,12 @@ class LightGame{
         timer = timer - 2;
       }
     }
+    
+      //Timer UI
+    textSize(30);
+    fill(255,255,255);
+    text("TIME LEFT:", 125, 465);
+    text(timeLeft-passedTime/1000, 295, 465);
     
     if(cleared){
       if(count < 5){
