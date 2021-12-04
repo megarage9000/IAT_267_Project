@@ -125,7 +125,7 @@ void lose() {
     outputToPort(0);
 }
 
-void reset() {
+void resetServo() {
   outputToPort(2);
 }
 

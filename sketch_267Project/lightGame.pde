@@ -63,7 +63,7 @@ class LightGame{
     fill(255,255,255);
     text("Resistors:   /5", 145, 305);
     text(count, 270, 305);
-    if(forceVal < goalPosition + 10 && forceVal > goalPosition - 10 && count < 5){ //If sensor is within range of the goal
+    if(forceVal < goalPosition + 15 && forceVal > goalPosition - 15 && count < 5){ //If sensor is within range of the goal
       timer = timer + 1;
       if(timer > timerLength){
         cleared = true;
@@ -121,7 +121,7 @@ class LightGame{
    if(sensorValue != ERR_ANALOG) {
      // --- Values here will need to be changed if using force sensor ---
      forceVal = sensorValue;
-     forceVal =  map(forceVal, 50, 1023, 0, 255);
+     forceVal =  map(forceVal, 50, 1000, 0, 255);
    }
   }
   
