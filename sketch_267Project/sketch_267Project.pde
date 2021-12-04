@@ -32,8 +32,8 @@ final int END = 2;
 
 int currGame = 0;
 final int LIGHT = 0;
-final int ACCEL = 2;
-final int POT = 1;
+final int ACCEL = 1;
+final int POT = 2;
 
 //Buttons
 Button startButton;

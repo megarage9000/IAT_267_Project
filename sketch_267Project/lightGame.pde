@@ -17,7 +17,7 @@ class LightGame{
   
   void gameplay(){
     if (goalPosition == 0){  //Randomises position of goal during startup
-      goalPosition = int(random(20, 255));  //----------------------
+      goalPosition = int(random(20, 205));  //----------------------
       ratioPos = int((float(goalPosition)/255)*windowHeight);//----------------------------
     }
     

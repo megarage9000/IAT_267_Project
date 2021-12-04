@@ -39,7 +39,7 @@ void depackageValues() {
       String input = new String(inputBuffer);
       inputVals = split(input, divider);
       // Catch the case where an empty buffer is passed.
-      if(inputVals.length <= 1) {
+      if(inputVals.length <= 3) {
         port.clear();
         canRead = false;
         return;
@@ -69,8 +69,9 @@ float poteniometer = ERR_ANALOG;
 String getAccelerometer() {
   if(!canRead){
     return ERR_ACCEL;
-  }
+  }                                                                              
   accelerometer = inputVals[0];
+  println("Acclerometer value = " + accelerometer);
   return accelerometer;
 }
 
@@ -117,27 +118,14 @@ void outputToPort(int val) {
 }
 
 void win() {
-  currentWins++;
-  if(currentWins != prevWins) {
-      printWins();
-      outputToPort(1);
-      prevWins = currentWins;
-  };
+   outputToPort(1);
 }
 
 void lose() {
-  currentWins = 0;
-  if(currentWins != prevWins) {
-      printWins();
-      outputToPort(0);
-      prevWins = currentWins;
-  } 
+    outputToPort(0);
 }
 
-void printWins() {
-  println("current wins = " + str(currentWins));
-  println("previous wins = " + str(prevWins));
-}
+
 
 void setToOutput(boolean value) {
   setOutput = value;

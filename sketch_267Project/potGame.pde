@@ -1,4 +1,4 @@
-class PotGame{
+          class PotGame{
   boolean doOnce = true;
   float pot;
   float distance;
