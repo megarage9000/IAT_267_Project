@@ -98,7 +98,7 @@ class AccelerometerGame {
     
     //Timer
     textSize(30);
-    fill(5,150,0);
+    fill(255,255,255);
     text("TIME LEFT:", 50, 765);
     text(timeLeft-passedTime/1000, 220, 765);
     

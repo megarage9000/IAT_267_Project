@@ -45,8 +45,8 @@ boolean exit = false;
 //Images
 PImage mainMenuBG;
 PImage startButtonIMG, helpButtonIMG, advanceButtonImg, menuButtonImg;
-PImage accelerometerBackground, advanceGameBG, loseGameBG, victoryBG;
-PImage bugImg, controlPanelImg, controlPanelImg2;
+PImage accelerometerBackground, advanceGameBG, forceBG, loseGameBG, victoryBG;
+PImage bugImg, controlPanelImg, controlPanelImg2, resistorImg;
 PImage redButtonImg, redButtonCImg, blueButtonImg, blueButtonCImg, greenButtonImg, greenButtonCImg;
 
 //Potentiometer Items
@@ -156,6 +156,8 @@ void loadImages(){
   advanceButtonImg = loadImage("advanceButton.png");
   victoryBG = loadImage("victoryScreen.png");
   menuButtonImg = loadImage("menuButton.png");
+  forceBG = loadImage("forceBG2.png");
+  resistorImg = loadImage("resistor.png");
 }
 
 
