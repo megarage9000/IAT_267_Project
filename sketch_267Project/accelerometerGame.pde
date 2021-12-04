@@ -12,10 +12,11 @@ class AccelerometerGame {
   color prog2 = color(255,0,0);
   color prog3 = color(255,0,0);
   float damp = 0.8;
+  boolean gameFin = false; //lazy lazy lazy im too lazy to rewrite
   
   //Timer
   boolean start;
-  int timeLimit = 10000;
+  int timeLimit = 60000;
   int currTime;
   int passedTime;
   int timeLeft = 60;
@@ -98,8 +99,8 @@ class AccelerometerGame {
     //Timer
     textSize(30);
     fill(5,150,0);
-    text("TIME:", 50, 765);
-    text(timeLeft-passedTime/1000, 130, 765);
+    text("TIME LEFT:", 50, 765);
+    text(timeLeft-passedTime/1000, 220, 765);
     
     //Progress bar
     fill(prog1);
@@ -128,12 +129,15 @@ class AccelerometerGame {
     currAnswerAdvance();
     
     //Check if game passed
-    if(answers[0] && answers[1] && answers[2]) passGame();
+    if(answers[0] && answers[1] && answers[2]) {
+      gameFin = true;
+      passGame();
+    }
     
     //Check if game failed
-    if(passedTime < timeLimit) passedTime = millis() - currTime;
+    if(passedTime < timeLimit && !gameFin) passedTime = millis() - currTime;
     else if(passedTime > timeLimit){
-      //failGame();      
+      loseGame();
     }
     
   }
@@ -221,8 +225,9 @@ class AccelerometerGame {
   }
   
   //Call when player loses game
-  void failGame(){
+  void loseGame(){
     start = false;  //Reset Timer
+    failGame();
   }
   
   //Checks if mouse is over button
@@ -319,6 +324,10 @@ class AccelerometerGame {
       else if(generator == 2) colorSequence[i] = color(0,255,0);
       else if(generator == 3) colorSequence[i] = color(0,100,255);
     }
+    
+    passedTime = 0;
+    gameFin = false;
+    start = false;
   }
 }
 
@@ -326,10 +335,10 @@ class AccelerometerGame {
 boolean up, down, left ,right;
 
 //void keyPressed(){
-//  if(key == 'W' || key == 'w') up = true;
-//  if(key == 'S' || key == 's') down = true;
-//  if(key == 'A' || key == 'a') left = true;
-//  if(key == 'D' || key == 'd') right = true;
+  //if(key == 'W' || key == 'w') up = true;
+  //if(key == 'S' || key == 's') down = true;
+  //if(key == 'A' || key == 'a') left = true;
+  //if(key == 'D' || key == 'd') right = true;
 //}
 
 //void keyReleased(){

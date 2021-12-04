@@ -11,11 +11,26 @@ class LightGame{
   int timerLength = 60;
   boolean complete = false;
   
+  
+  //Timer
+  boolean start;
+  int timeLimit = 30000;
+  int currTime;
+  int passedTime;
+  int timeLeft = 30;
+  
   LightGame(){
     //---------------------------------There are some values that will need to change depending on how sensitive the sensor is, I've marked them with --------
   }
   
   void gameplay(){
+    
+    //Timer
+    if(!start) {
+      startTimer();
+      start = true;
+    }
+    
     if (goalPosition == 0){  //Randomises position of goal during startup
       goalPosition = int(random(20, 205));  //----------------------
       ratioPos = int((float(goalPosition)/255)*windowHeight);//----------------------------
@@ -30,7 +45,13 @@ class LightGame{
     fill(255, 0 ,0);
     rect(windowWidth/1.5, 0, 200, heightPos); //displays sensor position
     
+    //Timer UI
+    textSize(30);
+    fill(5,150,0);
+    text("TIME LEFT:", 50, 765);
+    text(timeLeft-passedTime/1000, 220, 765);
     
+    //UI
     fill(150,150,150);
     rect(190, 190, 230, 40);//background of bar
     rect(190, 250, 230, 150);//text background
@@ -51,7 +72,7 @@ class LightGame{
         timer = timer - 2;
       }
     }
-
+    
     if(cleared){
       if(count < 5){
         count = count + 1;
@@ -71,7 +92,14 @@ class LightGame{
         text("(level clear text)", 200, 350);
         passGame();
     }
-    println(count);
+    //Check if time limit is up
+    if(passedTime < timeLimit && count < 5) passedTime = millis() - currTime;
+    else if(passedTime > timeLimit){
+      failGame();
+    }
+    
+ 
+    
   }
   
   void fakePot(){
@@ -91,6 +119,12 @@ class LightGame{
   
   //Resets game
   void reset(){
+    start = false;
     count = 0;
+    passedTime = 0;
+  }
+  
+  void startTimer(){
+    currTime = millis();
   }
 }

@@ -123,6 +123,8 @@ void failGame(){
   imgRender(loseGameBG, width/2, height/2);
   // -- Uncomment for sensors
   lose();
+  menuButton.render();
+  exit = true;
 }
 
 void imgRender(PImage img, float x, float y){
