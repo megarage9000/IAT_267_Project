@@ -98,15 +98,6 @@ void draw(){
 //---------------------------------------pass or fail Game
 void passGame(){
   //show pass screen
-//<<<<<<< HEAD
-//  imgRender(advanceGameBG, width/2, height/2);
-//  advanceButton.render();
-//  // -- Uncomment for sensors
-//  win();
-//  //for(int i = 0; i<2; i++){
-//  //  rect(800+i*100, 300, 100,50);
-//  //}
-//=======
   if(currGame == POT){
     imgRender(victoryBG, width/2,height/2);
     menuButton.render();
@@ -117,7 +108,6 @@ void passGame(){
     advanceButton.render();
   }
   win();
-//>>>>>>> main
   
   for(int i = 0; i<3; i++){
     strokeWeight(3);

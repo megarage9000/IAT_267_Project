@@ -207,9 +207,7 @@
   void fakePot(){
    //fake potentiometer using mouseY
    float wHeight = windowHeight;
-//<<<<<<< HEAD
    // pot = (mouseY/wHeight)*255; //Comment out to control by potentiometer
-   
    // --- Using Poteniometer Sensor Values ---
    // -- Uncomment for sensors
    float potValue = getPotentiometer();
@@ -217,10 +215,6 @@
      pot = potValue;
      pot = map(pot, 32, 1024, 0, 255);
    }
-//=======
-//   pot = valP_slider;
-//   pot = (mouseY/wHeight)*255;    //Comment out to control by potentiometer
-//>>>>>>> main
   }
   
   void overlap(){ 
