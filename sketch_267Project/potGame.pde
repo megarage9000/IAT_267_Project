@@ -215,7 +215,7 @@
    float potValue = getPotentiometer();
    if(potValue != ERR_ANALOG) {
      pot = potValue;
-     pot = map(pot, 32, 1024, 0, 255);
+     pot = map(pot, 32, 1000, 0, 255);
    }
   } 
   

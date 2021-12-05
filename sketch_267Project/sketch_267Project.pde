@@ -58,6 +58,7 @@ boolean inputReady = true;
 
 void setup(){
   size(1400,800);
+  frameRate(90);
   
   //loading Images
   loadImages();
