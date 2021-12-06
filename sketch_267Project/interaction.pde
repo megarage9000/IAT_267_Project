@@ -8,6 +8,7 @@ void mouseClicked(){
   
   if(advanceButton.Hit){
     currGame++;
+    setToOutput(true);
   }
   
   
@@ -20,6 +21,9 @@ void mouseClicked(){
     
     liGame.reset();
     acGame.reset();
+    poGame.reset();
+    resetServo();
+    setToOutput(true);
     //-----------Add potgame.reset() here
   }
 }

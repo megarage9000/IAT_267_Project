@@ -1,5 +1,5 @@
 class LightGame{
-  float pot;
+  float forceVal;
   int count;
   int timer;
   int maxTimer;
@@ -35,11 +35,11 @@ class LightGame{
     noStroke();
     //Goal 
     if (goalPosition == 0){  //Randomises position of goal during startup
-      goalPosition = int(random(20, 255));  //----------------------
+      goalPosition = int(random(20, 205));  //----------------------
       ratioPos = int((float(goalPosition)/255)*windowHeight);//----------------------------
     }
     
-    heightPos = int((float(valP_light)/255)*windowHeight);//------------------------
+    heightPos = int((forceVal/255)*windowHeight);//------------------------
     
     //Goal
     fakePot();//Takes input
@@ -59,10 +59,11 @@ class LightGame{
     rect(130, 200, (float(timer)/float(timerLength)) * 200, 20);  //Loading bar
     fill(0,0,0);
     textSize(25);
+
     fill(255,255,255);
     text("Resistors:   /5", 145, 305);
     text(count, 270, 305);
-    if(valP_light < goalPosition + 10 && valP_light > goalPosition - 10 && count < 5){ //If sensor is within range of the goal
+    if(forceVal < goalPosition + 15 && forceVal > goalPosition - 15 && count < 5){ //If sensor is within range of the goal
       timer = timer + 1;
       if(timer > timerLength){
         cleared = true;
@@ -111,9 +112,17 @@ class LightGame{
   
   void fakePot(){
    //fake potentiometer using mouseY
-   float wHeight = windowHeight;
-   pot = (mouseY/wHeight)*255;  //To control with sensor just comment out this line of code (ie do not remove it)
-   valP_light = int(pot);
+   //float wHeight = windowHeight;
+   //forceVal = (mouseY/wHeight)*255;  //To control with sensor just comment out this line of code (ie do not remove it)
+   
+   // --- Using Light / Force Sensor Values ---
+   // -- Uncomment for sensors
+   float sensorValue = getForceSensor();
+   if(sensorValue != ERR_ANALOG) {
+     // --- Values here will need to be changed if using force sensor ---
+     forceVal = sensorValue;
+     forceVal =  map(forceVal, 50, 1000, 0, 255);
+   }
   }
   
   //Resets game

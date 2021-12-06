@@ -1,4 +1,4 @@
-class PotGame{
+          class PotGame{
   boolean doOnce = true;
   float pot;
   float distance;
@@ -16,7 +16,10 @@ class PotGame{
   int numsRemoved;
   boolean penalty;
   boolean win;
+  boolean lose = false;
   boolean dupe;
+  int MAX_PENALTIES = 4;
+  int numPenalties = 0;
 
   
   PotGame(){
@@ -52,6 +55,10 @@ class PotGame{
       if(penalty){
         //Add time penalty
         //something like: Game's Timer = Game's Timer - 30;
+        numPenalties++;
+        if(numPenalties == MAX_PENALTIES) {
+           lose = true;
+        }
       }
       
       if(numsRemoved > 4){
@@ -67,6 +74,7 @@ class PotGame{
 
     text("Input: " + typing,600,50);
     text("Non-pair Numbers Found :" + numsRemoved + "/5",70,50);
+     text("Failed attempts until failure :" + numPenalties + "/" + MAX_PENALTIES, 600,100);
   
     //update text items
     for(int i=0; i<wordItems.size(); i++){
@@ -89,12 +97,14 @@ class PotGame{
        text("Number Dowsing Module Complete",70,100); 
        passGame();
     }
+    else if(lose) {
+      failGame();
+    }
     fakePot();
   }
   
   //RUNS this code once at the start
   void begin(){
-    
     foundLetters = new IntList();
 
     //list of numbers
@@ -191,16 +201,28 @@ class PotGame{
     }
     println(potPasscode);
     doOnce = false;
+    
+    win = false;
+    lose = false;
   }
   
   void fakePot(){
    //fake potentiometer using mouseY
    float wHeight = windowHeight;
-   pot = valP_slider;
-   pot = (mouseY/wHeight)*255;    //Comment out to control by potentiometer
-  }
+   // pot = (mouseY/wHeight)*255; //Comment out to control by potentiometer
+   // --- Using Poteniometer Sensor Values ---
+   // -- Uncomment for sensors
+   float potValue = getPotentiometer();
+   if(potValue != ERR_ANALOG) {
+     pot = potValue;
+     pot = map(pot, 32, 1000, 0, 255);
+   }
+  } 
   
-  void overlap(){ 
-    //why was this here
+  void reset() {
+    doOnce = true;
+    numsRemoved = 0;
+    numPenalties = 0;
+    wordItems = new ArrayList<WordItem>();
   }
 }

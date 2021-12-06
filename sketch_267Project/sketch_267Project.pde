@@ -10,7 +10,7 @@ import processing.serial.*;
 Serial myPort;
 String accelOrientation;
 
-int valP_light; // Data received from the serial port - variable to store the light sensor reading
+float valP_light; // Data received from the serial port - variable to store the light sensor reading
 int valP_slider; // Data received from the serial port - variable to store the slider sensor reading
 int valP_button;
 
@@ -58,26 +58,23 @@ boolean inputReady = true;
 
 void setup(){
   size(1400,800);
+  frameRate(90);
   
   //loading Images
   loadImages();
-  
-  //Port
-  String portName = Serial.list()[0]; //List all ports to find correct one
-  myPort = new Serial(this, Serial.list()[0], 9600);
-
+  // --- Initalizes Serial stuff, see ArduinoHelpers --- 
+  initializeSerial();
   //Buttons
   startButton = new Button(startButtonIMG, 300, 600, startButtonIMG);
   helpButton = new Button(helpButtonIMG, 750, 600, helpButtonIMG);
   advanceButton = new Button(advanceButtonImg, 700,600, advanceButtonImg);
   menuButton = new Button(menuButtonImg,700,600,menuButtonImg);
   
-  setSensor();
 }
 
 //Main
 void draw(){
-  
+  depackageValues();
   background(50); //Placeholder since we dont have image background yet
   
   buttons(); //important for interaction, *REFRESHES ALL BUTTONS TO CHECK IF THEYRE CLICKED*
@@ -111,6 +108,7 @@ void passGame(){
     imgRender(advanceGameBG, width/2, height/2);
     advanceButton.render();
   }
+  win();
   
   for(int i = 0; i<3; i++){
     strokeWeight(3);
@@ -124,6 +122,8 @@ void passGame(){
 void failGame(){
   //show fail screen
   imgRender(loseGameBG, width/2, height/2);
+  // -- Uncomment for sensors
+  lose();
   menuButton.render();
   exit = true;
 }
@@ -135,26 +135,6 @@ void imgRender(PImage img, float x, float y){
     image(img, -img.width/2, -img.height/2, img.width, img.height);
     popMatrix();  
 }
-
-//---------------------------------------Processing to Arduino--------------------------------------
-void setSensor(){
-  
-  switch (currGame){
-    case LIGHT:
-      myPort.write("forceSet");
-      break;
-    case ACCEL:
-      myPort.write("accelSet");
-      break;
-    case POT:
-      myPort.write("potentioSet");
-      break;
-    default:
-    break;
-  }
-      
-}
-
 
 //--------------------------------------- Loading Var-----------------------------------------------
 //For loading images used for UI and Interface

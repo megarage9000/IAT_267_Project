@@ -36,23 +36,7 @@ class AccelerometerGame {
 
   
   AccelerometerGame(){
-    //Bug vectors
-    int randomSpawn = (int)random(1,5);
-    switch(randomSpawn){
-      case 1:
-        bugPos = new PVector(120,120);
-        break;
-      case 2:
-        bugPos = new PVector(1300,60);
-        break;
-      case 3:
-        bugPos = new PVector(1300,740);
-        break;
-      case 4:
-        bugPos = new PVector(130, 640);
-        break;
-      default:
-    }
+    spawnBug();
     vel = new PVector(0,0);
     
     //Generate unique answer set  1=Red 2=Green 3=Blue
@@ -147,6 +131,26 @@ class AccelerometerGame {
     vel.mult(damp);
   }
   
+  void spawnBug() {
+    //Bug vectors
+    int randomSpawn = (int)random(1,5);
+    switch(randomSpawn){
+      case 1:
+        bugPos = new PVector(120,120);
+        break;
+      case 2:
+        bugPos = new PVector(1300,60);
+        break;
+      case 3:
+        bugPos = new PVector(1300,740);
+        break;
+      case 4:
+        bugPos = new PVector(130, 640);
+        break;
+      default:
+    }
+  }
+  
   void render(){
     pushMatrix();
     translate(bugPos.x, bugPos.y);
@@ -161,14 +165,16 @@ class AccelerometerGame {
   }
   
   void accelerate(){
-    //Check port for input
-    if(myPort.available()>100){
-      myPort.clear();
-    }
-    accelOrientation = myPort.readStringUntil('\n');
-    if(accelOrientation != null) {
+    //Check port for input   
+    //accelOrientation = myPort.readStringUntil('\n');
+    //if(accelOrientation != null) orientation = accelOrientation;
+    //orientation = trim(orientation);
+    orientation = "None";
+    // --- Using Acceleromter Sensor Values --- 
+    // -- Uncomment for sensors
+    accelOrientation = getAccelerometer();
+    if(accelOrientation != ERR_ACCEL) {
       orientation = accelOrientation;
-      orientation = trim(orientation);
     }
     
     if(orientation.equals("Down")) vel.add(upForce);
@@ -326,6 +332,7 @@ class AccelerometerGame {
     passedTime = 0;
     gameFin = false;
     start = false;
+    spawnBug();
   }
 }
 

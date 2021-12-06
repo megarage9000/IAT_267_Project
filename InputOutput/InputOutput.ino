@@ -1,67 +1,152 @@
 #include <Wire.h>                 // Must include Wire library for I2C
+#include <Servo.h>
 #include "SparkFun_MMA8452Q.h"    // Click here to get the library: http://librarymanager/All#SparkFun_MMA8452Q
 
 MMA8452Q accel;                   // create instance of the MMA8452 class
+Servo ticker;
+char trigger;
+boolean test;
 
-// Set Analog inputs (Any analog inputs)
-int lightPin = A0;
-int potPin = A1;
+// analog pins
+int potenioPin = A0;
+int forcePin = A1;
+int servoPin = A2;
 
-// Initialize sensor values
-int lightVal = 0;
-int potVal = 0;
+// digital
+int greenLed = 8;
+int redLed =  13;
+int buzzer = 12;
 
-// For packaging purposes, set up "dividers"
-char lightDivider = 'a';
-char potDivider = 'b';
+// divider
+char divider = '|';
+
+// Values
+String inputVals = "";
 
 void setup() {
-  // put your setup code here, to run once:
+  ticker.attach(servoPin);
+  accel.init();
   Serial.begin(9600);
+  ticker.write(0);
+}
 
-  //accelerometer setup
-  if (accel.begin() == false) {
-    Serial.println("Not Connected. Please check connections and read the hookup guide.");
-    while (1);
-  }
+
+void loop() { 
+  Serial.flush();
+  inputVals = packageInputVals();
+  Serial.println(inputVals);
+  delay(1000/60);
+}
+
+// --- Sensor Input to Processing --- 
+String packageInputVals() {
+  // sensor values
+  String inputPackageVals = "";
   
+  // -- Read Accelerometer
+  inputPackageVals = accelerometerRead();
+  inputPackageVals += divider;
+  
+  // -- Read Poteniometer
+  inputPackageVals += analogRead(potenioPin);
+  inputPackageVals += divider;
+  
+  // -- Read Light / Force Sensor
+  inputPackageVals += analogRead(forcePin);
+  inputPackageVals += divider;
+  
+  return inputPackageVals;
 }
 
-void packageAndSend(int val, char divider, int waitTime=0) {
-  Serial.print(divider);
-  Serial.print(val);
-  Serial.print(divider);
-  Serial.println(); 
-  delay(waitTime);
-}
-
-void loop() {
-  // put your main code here, to run repeatedly:
-//  lightVal = analogRead(A0);
-//  potVal = analogRead(A1);
-//
-//  packageAndSend(lightVal, lightDivider);
-//  packageAndSend(potVal, potDivider);
-//  delay(1000);
-
-//  Accelerometer Code
+String accelerometerRead() {
   if (accel.available()) {      // Wait for new data from accelerometer
     // Orientation of board (Right, Left, Down, Up);
     if (accel.isRight() == true) {
-      Serial.println("Right");
+      return "Right";
     }
     else if (accel.isLeft() == true) {
-      Serial.println("Left");
+      return "Left";
     }
     else if (accel.isUp() == true) {
-      Serial.println("Up");
+      return "Up";
     }
     else if (accel.isDown() == true) {
-      Serial.println("Down");
+      return "Down";
     }
     else if (accel.isFlat() == true) {
-      Serial.println("Flat");
+      return "Flat";
+    }
+    else {
+      return "None";
     }
   }
-  delay(100);
+  else {
+    return "None";
+  }
+}
+
+// Calls everytime there is available information from Processing
+// https://www.arduino.cc/reference/en/language/functions/communication/serial/serialevent/
+
+const int WIN = 1;
+const int LOSE = 0;
+const int RESET = 2;
+
+void serialEvent() {
+  while(Serial.available() > 0) {
+    int outputState = Serial.read();
+    if(outputState == WIN) {
+      win();
+    }
+    else if(outputState == LOSE){
+      lose();
+    }
+    else if(outputState == RESET) {
+      resetServo();
+    }
+    
+  }
+}
+
+// --- Output from Processing to Arduino --- 
+const int ROTATION = 180 / 3;
+int numRotations = 0;
+
+void output() {
+  digitalWrite(greenLed, HIGH);
+  delay(500);
+  digitalWrite(greenLed, LOW);
+  delay(500);
+}
+
+void win() {
+  digitalWrite(greenLed, HIGH);
+  tone(buzzer, 1000);
+  delay(500);
+  tone(buzzer, 1500);
+  digitalWrite(greenLed, LOW);
+  tick();
+  delay(500);
+  noTone(buzzer);
+}
+
+void lose() {
+  digitalWrite(redLed, HIGH);
+  tone(buzzer, 1500);
+  delay(500);
+  tone(buzzer, 1000);
+  digitalWrite(redLed, LOW);
+  resetServo();
+  delay(500);
+  noTone(buzzer);
+}
+
+void tick() {
+  numRotations++;
+  ticker.write(ROTATION * numRotations);
+}
+
+void resetServo() {
+  ticker.write(-numRotations * ROTATION);
+  numRotations = 0;
 }
