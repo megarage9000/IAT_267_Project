@@ -101,6 +101,7 @@
       failGame();
     }
     fakePot();
+    // println("passcode = " + potPasscode);
   }
   
   //RUNS this code once at the start
